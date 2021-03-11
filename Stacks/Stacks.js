@@ -7,8 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import Login from '../../mobile/Pages/Login';
 import Cadastro from '../../mobile/Pages/Cadastro';
-import TelaInicio from '../../mobile/Pages/TelaInicio';
-import Lojas from '../../mobile/Pages/Lojas';
+import Home from '../../mobile/Pages/Home';
+import Busca from '../Pages/Busca';
 import Tabs from '../../mobile/Stacks/Tabs';
 
 const Stack = createStackNavigator();

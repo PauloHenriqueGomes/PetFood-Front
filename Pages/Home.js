@@ -14,7 +14,7 @@ import logoRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoRaca.pn
 import logoBrinquedo from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoBrinquedo.png';
 import logoRemedio from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoRemedio.png';
 
-export default function TelaInicio() {
+export default function Home() {
 
 
 

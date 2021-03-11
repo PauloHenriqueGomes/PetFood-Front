@@ -7,8 +7,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Login from '../../mobile/Pages/Login';
 import Cadastro from '../../mobile/Pages/Cadastro';
-import TelaInicio from '../../mobile/Pages/TelaInicio';
-import Lojas from '../../mobile/Pages/Lojas';
+import Home from '../../mobile/Pages/Home';
+import Busca from '../Pages/Busca';
 import AlterarCadastro from '../../mobile/Pages/AlterarCadastro';
 import Pedidos from '../../mobile/Pages/Pedidos';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -25,13 +25,13 @@ export default function Tabs() {
 
     <Tab.Navigator activcolor='#d3d3d3'>
 
-      <Tab.Screen name="Home"component={TelaInicio} 
+      <Tab.Screen name="Home"component={Home} 
       options={{
         tabBarIcon:({focused})=>
         (<Icon  name="home"color ={'#808080'} size={28}/>),
         }}
       />
-      <Tab.Screen name="Busca" component={Lojas} 
+      <Tab.Screen name="Busca" component={Busca} 
       options={{
         tabBarIcon:({focused})=>
         (<Icon  name="search"color ={'#808080'} size={28}/>),
@@ -49,6 +49,7 @@ export default function Tabs() {
         (<Icon  name="user"color ={'#808080'} size={28}/>),
         }}
         />
+
     </Tab.Navigator>
 
   );

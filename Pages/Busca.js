@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, FlatList, ScrollView, ListItemText, ListItem,Avatar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
 import logo from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoPet.png'
 import logoCobasi from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/Cobasi.png';
 import logoPetz from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/Petz.png';
@@ -14,7 +15,7 @@ import logoRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoRaca.pn
 import logoBrinquedo from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoBrinquedo.png';
 import logoRemedio from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoRemedio.png';
 
-export default function Lojas() {
+export default function Busca() {
 
 
 
@@ -46,20 +47,19 @@ export default function Lojas() {
 
 
 
-          <Text style={styles.LojaDest}>Lojas em destaque</Text>
+          <Text style={styles.LojaDest}>Essas lojas perto de voce!</Text>
 
           <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
           <Image source={logoPetz} style={styles.ImageLoja} />          
             <Text style={styles.buttontext}> Pets</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista 500</Text>
           </TouchableOpacity>
-          
           <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
           <Image source={logoCobasi} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Cobasi</Text>
           <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista 500</Text>
-          </TouchableOpacity>
 
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
           <Image source={logoRacaoForte} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Ração Forte</Text>
@@ -99,10 +99,10 @@ export default function Lojas() {
 
         </View>
 
-
-
-
       </View>
+
+
+
     </ScrollView>
 
 

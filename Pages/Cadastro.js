@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState}from 'react';
 import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../../mobile/services/api';
@@ -22,7 +23,7 @@ export default function Cadastro() {
 
 //===========cadastro SEM validação========================
 
-const handleSignClick = async () => {
+const hhandleSignClick = async () => {
   navigation.reset({
     routes: [{ name: 'Tabs' }]
 
@@ -37,27 +38,40 @@ const handleSignClick = async () => {
  //===========cadastro COM validação========================
 
 
-  const hhandleSignClick = async () => {
+  const handleSignClick = async () => {
     if(nome != '' && email != '' && senha != ''&& celular != ''&& cep != ''&& rua != ''&& numero != '') {
-        let res = await api.signUp(nome, email, senha, celular, cep, rua, numero);
+
+      let api = axios.create({
+        baseURL: 'http://192.168.1.17:8080'
+        });
+
         
-        if(res.token) {
-            await AsyncStorage.setItem('token', res.token);
-
-            userDispatch({
-                type: 'setAvatar',
-                payload:{
-                    avatar: res.data.avatar
-                }
-            });
-
-            navigation.reset({
-                routes:[{name:'Tabs'}]
-            });
-
-        } else {
-            alert("Erro: "+res.error);
+        let requestHeaders = {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+        'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
         }
+        }
+        
+        //api.get('/user/login?email=' + email + '&password=' + senha, [requestHeaders])
+        
+
+        api.post('user/create?cityZone=' +  nome + email + senha + celular + cep + rua + numero , [requestHeaders])
+        
+        
+        
+        
+      .then(function (response) {
+        console.log(response);
+        alert(response.data);
+        navigation.reset({
+          routes: [{ name: 'Tabs' }]
+        });
+
+        }).catch(error => {
+          alert('Erro cadastro');
+        });
     } else {
         alert("Preencha os campos");
     }
@@ -96,6 +110,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={nome}
           autoCorrect={false}
+          onChangeText={setNome}
         />
 
         <TextInput
@@ -106,6 +121,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={email}
           autoCorrect={false}
+          onChangeText={setEmail}
         />
 
         <TextInput
@@ -116,6 +132,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={senha}
           autoCorrect={false}
+          onChangeText={setSenha}
         />
 
         <TextInput
@@ -126,6 +143,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={celular}
           autoCorrect={false}
+          onChangeText={setCelular}
         />
 
         <TextInput
@@ -136,6 +154,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={cep}
           autoCorrect={false}
+          onChangeText={setCep}
         />
 
         <TextInput
@@ -146,6 +165,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={rua}
           autoCorrect={false}
+          onChangeText={setRua}
         />
 
         <TextInput
@@ -156,6 +176,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={numero}
           autoCorrect={false}
+          onChangeText={setNumero}
         />
 
         <TouchableOpacity onPress={handleSignClick} style={styles.button}>

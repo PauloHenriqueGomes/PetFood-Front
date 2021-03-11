@@ -34,6 +34,8 @@ const handleSignClick = async () => {
 
 
 
+
+
  //===========cadastro COM validação========================
 
 
@@ -162,7 +164,7 @@ const handleMessageButtonClick = () => {
           <Text style={styles.buttontext}> Alterar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleSignClick} style={styles.buttonsair}>
+        <TouchableOpacity onPress={()=> navigation.navigate('Login')} style={styles.buttonsair}>
           <Text style={styles.buttontext}> Sair</Text>
         </TouchableOpacity>
 
