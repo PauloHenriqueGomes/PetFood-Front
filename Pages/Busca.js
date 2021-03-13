@@ -47,7 +47,7 @@ export default function Busca() {
 
 
 
-          <Text style={styles.LojaDest}>Essas lojas perto de voce!</Text>
+          <Text style={styles.LojaDest}>Essas lojas perto de vocee!</Text>
 
           <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
           <Image source={logoPetz} style={styles.ImageLoja} />          

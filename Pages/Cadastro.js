@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState}from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -9,7 +9,6 @@ import api from '../../mobile/services/api';
 
 export default function Cadastro() {
 
-  //const { dispatch: userDispatch } = useContext(UserContext);
   const navigation = useNavigation();
 
   const [nome, setNome] = useState('');
@@ -21,67 +20,51 @@ export default function Cadastro() {
   const [numero, setNumero] = useState('');
 
 
-//===========cadastro SEM validação========================
-
-const hhandleSignClick = async () => {
-  navigation.reset({
-    routes: [{ name: 'Tabs' }]
-
-  })
-};
 
 
-
-
-
-
- //===========cadastro COM validação========================
+  //===========cadastro COM validação========================
 
 
   const handleSignClick = async () => {
-    if(nome != '' && email != '' && senha != ''&& celular != ''&& cep != ''&& rua != ''&& numero != '') {
+    if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
 
-      let api = axios.create({
-        baseURL: 'http://192.168.1.17:8080'
-        });
 
-        
-        let requestHeaders = {
+      axios('http://192.168.1.17:8080/user/create?cityZone=EAST', {
+        method: 'POST',
         headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
-        'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
-        }
-        }
-        
-        //api.get('/user/login?email=' + email + '&password=' + senha, [requestHeaders])
-        
-
-        api.post('user/create?cityZone=' +  nome + email + senha + celular + cep + rua + numero , [requestHeaders])
-        
-        
-        
-        
-      .then(function (response) {
-        console.log(response);
-        alert(response.data);
-        navigation.reset({
-          routes: [{ name: 'Tabs' }]
-        });
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({
+          'birthdayDate': '2021-03-04T20:27:36.486Z',
+          'email': email,
+          'name': nome,
+          'password': senha,
+          'registrationInfos': {
+            'address': rua,
+            'cellPhone': celular,
+            'cep': cep,
+            'city': 'Sp',
+            'document': '3',
+            'numberAddress': numero,
+            'uf': 'SP'
+          }
+        })
+      })
+        .then(function (response) {
+          console.log(response);
+          alert(response.data);
+          navigation.reset({
+            routes: [{ name: 'Tabs' }]
+          });
 
         }).catch(error => {
-          alert('Erro cadastro');
+          alert('Alguma informação errada');
         });
     } else {
-        alert("Preencha os campos");
+      alert("Preencha os campos!");
     }
-}
-
-const handleMessageButtonClick = () => {
-    navigation.reset({
-        routes: [{name: 'SignIn'}]
-    });
-}
+  }
 
 
 
@@ -89,10 +72,7 @@ const handleMessageButtonClick = () => {
 
 
 
-
-
-
-//=============TELA====================================
+  //=============TELA====================================
 
 
 
@@ -191,6 +171,9 @@ const handleMessageButtonClick = () => {
     </View>
   );
 }
+
+
+
 
 const styles = StyleSheet.create({
   container: {

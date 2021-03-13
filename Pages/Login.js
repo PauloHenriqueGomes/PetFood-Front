@@ -29,27 +29,27 @@ export default function Login() {
 
       let api = axios.create({
         baseURL: 'http://192.168.1.17:8080'
-        });
-        
-        let requestHeaders = {
+      });
+
+      let requestHeaders = {
         headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
-        'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+          'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
         }
-        }
-        
-        api.get('/user/login?email=' + email + '&password=' + senha, [requestHeaders])
-        
-        
-        
-        
+      }
+
+      api.get('/user/login?email=' + email + '&password=' + senha, [requestHeaders])
+
+
+
+
         .then(function (response) {
-        console.log(response);
-        alert(response.data);
-        navigation.reset({
-          routes: [{ name: 'Tabs' }]
-        });
+          console.log(response);
+          alert(response.data);
+          navigation.reset({
+            routes: [{ name: 'Tabs' }]
+          });
 
         }).catch(error => {
           alert('E-mail e/ou senha errados!');
