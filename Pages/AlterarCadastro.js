@@ -1,14 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState}from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../../mobile/services/api';
 
 export default function AlterarCadastro() {
 
-  //const { dispatch: userDispatch } = useContext(UserContext);
   const navigation = useNavigation();
 
   const [nome, setNome] = useState('');
@@ -20,58 +20,101 @@ export default function AlterarCadastro() {
   const [numero, setNumero] = useState('');
 
 
-//===========cadastro SEM validação========================
-
-const handleSignClick = async () => {
-  navigation.reset({
-    routes: [{ name: 'Tabs' }]
-
-  })
-};
 
 
+  //===========ALTERAR CADASTRO========================
 
 
+  const handleSignClick = async () => {
+    if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
 
 
+      axios('http://192.168.1.17:8080/user/update?cityZone=EAST&name='+nome, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+          'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
+        },
+        data: JSON.stringify({
+          'birthdayDate': '2021-03-04T20:27:36.486Z',
+          'email': email,
+          'name': nome,
+          'password': senha,
+          'registrationInfos': {
+            'address': rua,
+            'cellPhone': celular,
+            'cep': cep,
+            'city': 'Sp',
+            'document': '3',
+            'numberAddress': numero,
+            'uf': 'SP'
+          }
+        })
+      })
+        .then(function (response) {
+          console.log(response);
+          alert(response.data);
+          navigation.reset({
+            routes: [{ name: 'Login' }]
+          });
 
-
- //===========cadastro COM validação========================
-
-
-  const hhandleSignClick = async () => {
-    if(nome != '' && email != '' && senha != ''&& celular != ''&& cep != ''&& rua != ''&& numero != '') {
-        let res = await api.signUp(nome, email, senha, celular, cep, rua, numero);
-        
-        if(res.token) {
-            await AsyncStorage.setItem('token', res.token);
-
-            userDispatch({
-                type: 'setAvatar',
-                payload:{
-                    avatar: res.data.avatar
-                }
-            });
-
-            navigation.reset({
-                routes:[{name:'Tabs'}]
-            });
-
-        } else {
-            alert("Erro: "+res.error);
-        }
+        }).catch(error => {
+          alert('Alguma informação errada');
+        });
     } else {
-        alert("Preencha os campos");
+      alert("Preencha os campos!");
     }
-}
+  }
 
-const handleMessageButtonClick = () => {
-    navigation.reset({
-        routes: [{name: 'SignIn'}]
-    });
-}
+  //=========================EXCLUIR======================================
 
 
+  const excluir = async () => {
+    if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
+
+
+      axios('http://192.168.1.17:8080/user/delete?name='+nome, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+          'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
+        },
+        data: JSON.stringify({
+          'birthdayDate': '2021-03-04T20:27:36.486Z',
+          'email': email,
+          'name': nome,
+          'password': senha,
+          'registrationInfos': {
+            'address': rua,
+            'cellPhone': celular,
+            'cep': cep,
+            'city': 'Sp',
+            'document': '3',
+            'numberAddress': numero,
+            'uf': 'SP'
+          }
+        })
+      })
+        .then(function (response) {
+          console.log(response);
+          alert(response.data);
+          navigation.reset({
+            routes: [{ name: 'Login' }]
+          });
+
+        }).catch(error => {
+          alert('Alguma informação errada');
+        });
+    } else {
+      alert("Preencha os campos!");
+    }
+  }
 
 
 
@@ -79,8 +122,7 @@ const handleMessageButtonClick = () => {
 
 
 
-
-//=============TELA====================================
+  //=============TELA====================================
 
 
 
@@ -92,12 +134,13 @@ const handleMessageButtonClick = () => {
 
         <TextInput
           style={styles.imput}
-          placeholder="Nome completo"
+          placeholder={nome}
           placeholderTextColor="#999"
           keyboardType="email-adress"
           autoCapitalize="none"
           value={nome}
           autoCorrect={false}
+          onChangeText={setNome}
         />
 
         <TextInput
@@ -108,6 +151,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={email}
           autoCorrect={false}
+          onChangeText={setEmail}
         />
 
         <TextInput
@@ -118,6 +162,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={senha}
           autoCorrect={false}
+          onChangeText={setSenha}
         />
 
         <TextInput
@@ -128,6 +173,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={celular}
           autoCorrect={false}
+          onChangeText={setCelular}
         />
 
         <TextInput
@@ -138,6 +184,7 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={cep}
           autoCorrect={false}
+          onChangeText={setCep}
         />
 
         <TextInput
@@ -148,25 +195,31 @@ const handleMessageButtonClick = () => {
           autoCapitalize="none"
           value={rua}
           autoCorrect={false}
+          onChangeText={setRua}
         />
 
         <TextInput
           style={styles.imput}
           placeholder="Numero"
           placeholderTextColor="#999"
-          keyboardType="email-adress"
+          keyboardType="numeric"
           autoCapitalize="none"
           value={numero}
           autoCorrect={false}
+          onChangeText={setNumero}
         />
 
         <TouchableOpacity onPress={handleSignClick} style={styles.button}>
-          <Text style={styles.buttontext}> Alterar</Text>
+          <Text style={styles.buttontext}> Alterar Cadastro</Text>
         </TouchableOpacity>
+
 
         <TouchableOpacity onPress={()=> navigation.navigate('Login')} style={styles.buttonsair}>
           <Text style={styles.buttontext}> Sair</Text>
         </TouchableOpacity>
+
+          <Text onPress={excluir} style={styles.excluir}> Excluir conta</Text>
+        
 
 
 
@@ -175,6 +228,9 @@ const handleMessageButtonClick = () => {
     </View>
   );
 }
+
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -200,18 +256,23 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 40,
   },
+
   buttonsair: {
     height: 42,
-    backgroundColor: '#dd5035',
+    backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
     marginTop: 5,
-    marginBottom: 20,
+    marginBottom: 40,
   },
 
   buttontext: {
     color: 'white'
+  },
+
+  excluir: {
+    color: 'black'
   },
 
 
