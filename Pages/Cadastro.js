@@ -55,12 +55,16 @@ export default function Cadastro() {
           console.log(response);
           alert(response.data);
           navigation.reset({
-            routes: [{ name: 'Tabs' }]
+            routes: [{ name: 'Login' }]
           });
 
         }).catch(error => {
-          alert('Alguma informação errada');
-        });
+          if (error.response) {
+          alert(error.response.data);
+          } else {
+          alert(error);
+          }
+          });
     } else {
       alert("Preencha os campos!");
     }
@@ -86,7 +90,7 @@ export default function Cadastro() {
           style={styles.imput}
           placeholder="Nome completo"
           placeholderTextColor="#999"
-          keyboardType="email-adress"
+          keyboardType="email-address"
           autoCapitalize="none"
           value={nome}
           autoCorrect={false}
@@ -97,7 +101,7 @@ export default function Cadastro() {
           style={styles.imput}
           placeholder="Email"
           placeholderTextColor="#999"
-          keyboardType="email-adress"
+          keyboardType="email-address"
           autoCapitalize="none"
           value={email}
           autoCorrect={false}
@@ -108,7 +112,7 @@ export default function Cadastro() {
           style={styles.imput}
           placeholder="Senha"
           placeholderTextColor="#999"
-          keyboardType="email-adress"
+          keyboardType="email-address"
           autoCapitalize="none"
           value={senha}
           autoCorrect={false}
@@ -119,7 +123,7 @@ export default function Cadastro() {
           style={styles.imput}
           placeholder="Celular"
           placeholderTextColor="#999"
-          keyboardType="email-adress"
+          keyboardType="numeric"
           autoCapitalize="none"
           value={celular}
           autoCorrect={false}
@@ -130,7 +134,7 @@ export default function Cadastro() {
           style={styles.imput}
           placeholder="CEP"
           placeholderTextColor="#999"
-          keyboardType="email-adress"
+          keyboardType="numeric"
           autoCapitalize="none"
           value={cep}
           autoCorrect={false}
@@ -152,7 +156,7 @@ export default function Cadastro() {
           style={styles.imput}
           placeholder="Numero"
           placeholderTextColor="#999"
-          keyboardType="email-adress"
+          keyboardType="numeric"
           autoCapitalize="none"
           value={numero}
           autoCorrect={false}

@@ -5,9 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import api from '../../mobile/services/api';
+import api from '../services/api';
 
-export default function AlterarCadastro() {
+export default function AlterarLogista() {
 
   const navigation = useNavigation();
 
@@ -19,6 +19,8 @@ export default function AlterarCadastro() {
   const [rua, setRua] = useState('');
   const [numero, setNumero] = useState('');
 
+  
+
 
 
 
@@ -29,7 +31,7 @@ export default function AlterarCadastro() {
     if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
 
 
-      axios('http://192.168.1.17:8080/user/update?cityZone=EAST&name='+nome, {
+      axios('http://192.168.1.17:8080/seller/update?categories=FOOD&cityZone=NORTH&name='+nome, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -58,7 +60,7 @@ export default function AlterarCadastro() {
           console.log(response);
           alert(response.data);
           navigation.reset({
-            routes: [{ name: 'Login' }]
+            routes: [{ name: 'LoginLogista' }]
           });
 
         }).catch(error => {
@@ -80,7 +82,7 @@ export default function AlterarCadastro() {
     if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
 
 
-      axios('http://192.168.1.17:8080/user/delete?name='+nome, {
+      axios('http://192.168.1.17:8080/seller/delete?name='+nome, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -109,7 +111,7 @@ export default function AlterarCadastro() {
           console.log(response);
           alert(response.data);
           navigation.reset({
-            routes: [{ name: 'Login' }]
+            routes: [{ name: 'LoginLogista' }]
           });
 
         }).catch(error => {
@@ -222,7 +224,7 @@ export default function AlterarCadastro() {
         </TouchableOpacity>
 
 
-        <TouchableOpacity onPress={()=> navigation.navigate('Login')} style={styles.buttonsair}>
+        <TouchableOpacity onPress={()=> navigation.navigate('LoginLogista')} style={styles.buttonsair}>
           <Text style={styles.buttontext}> Sair</Text>
         </TouchableOpacity>
 

@@ -5,9 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import api from '../../mobile/services/api';
+import api from '../services/api';
 
-export default function AlterarCadastro() {
+export default function CadastroLogista() {
 
   const navigation = useNavigation();
 
@@ -22,21 +22,18 @@ export default function AlterarCadastro() {
 
 
 
-  //===========ALTERAR CADASTRO========================
+  //===========cadastro COM validação========================
 
 
   const handleSignClick = async () => {
     if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
 
 
-      axios('http://192.168.1.17:8080/user/update?cityZone=EAST&name='+nome, {
-        method: 'PUT',
+      axios('http://192.168.1.17:8080/seller/create?categories=FOOD&cityZone=NORTH', {
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
-          'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
+          'Content-Type': 'application/json'
         },
         data: JSON.stringify({
           'birthdayDate': '2021-03-04T20:27:36.486Z',
@@ -58,58 +55,7 @@ export default function AlterarCadastro() {
           console.log(response);
           alert(response.data);
           navigation.reset({
-            routes: [{ name: 'Login' }]
-          });
-
-        }).catch(error => {
-          if (error.response) {
-          alert(error.response.data);
-          } else {
-          alert(error);
-          }
-          });
-    } else {
-      alert("Preencha os campos!");
-    }
-  }
-
-  //=========================EXCLUIR======================================
-
-
-  const excluir = async () => {
-    if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
-
-
-      axios('http://192.168.1.17:8080/user/delete?name='+nome, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
-          'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
-        },
-        data: JSON.stringify({
-          'birthdayDate': '2021-03-04T20:27:36.486Z',
-          'email': email,
-          'name': nome,
-          'password': senha,
-          'registrationInfos': {
-            'address': rua,
-            'cellPhone': celular,
-            'cep': cep,
-            'city': 'Sp',
-            'document': '3',
-            'numberAddress': numero,
-            'uf': 'SP'
-          }
-        })
-      })
-        .then(function (response) {
-          console.log(response);
-          alert(response.data);
-          navigation.reset({
-            routes: [{ name: 'Login' }]
+            routes: [{ name: 'LoginLogista' }]
           });
 
         }).catch(error => {
@@ -142,7 +88,7 @@ export default function AlterarCadastro() {
 
         <TextInput
           style={styles.imput}
-          placeholder="Nome Completo"
+          placeholder="Nome completo"
           placeholderTextColor="#999"
           keyboardType="email-address"
           autoCapitalize="none"
@@ -218,16 +164,9 @@ export default function AlterarCadastro() {
         />
 
         <TouchableOpacity onPress={handleSignClick} style={styles.button}>
-          <Text style={styles.buttontext}> Alterar Cadastro</Text>
+          <Text style={styles.buttontext}> Cadastrar</Text>
         </TouchableOpacity>
 
-
-        <TouchableOpacity onPress={()=> navigation.navigate('Login')} style={styles.buttonsair}>
-          <Text style={styles.buttontext}> Sair</Text>
-        </TouchableOpacity>
-
-          <Text onPress={excluir} style={styles.excluir}> Excluir conta</Text>
-        
 
 
 
@@ -265,22 +204,8 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
 
-  buttonsair: {
-    height: 42,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
-    marginTop: 5,
-    marginBottom: 40,
-  },
-
   buttontext: {
     color: 'white'
-  },
-
-  excluir: {
-    color: 'black'
   },
 
 

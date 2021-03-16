@@ -1,14 +1,14 @@
 
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit,Button } from 'react-native';
+import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import logo from '../assets/LogoPet.png';
-import api from '../../mobile/services/api';
+import api from '../services/api';
 
-export default function Login() {
+export default function LoginLogista() {
 
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
@@ -39,7 +39,7 @@ export default function Login() {
         }
       }
 
-      api.get('/user/login?email=' + email + '&password=' + senha, [requestHeaders])
+      api.get('/seller/login?email=' + email + '&password=' + senha, [requestHeaders])
 
 
 
@@ -48,7 +48,7 @@ export default function Login() {
           console.log(response);
           alert(response.data);
           navigation.reset({
-            routes: [{ name: 'Tabs' }]
+            routes: [{ name: 'TabsLogista' }]
           });
 
         }).catch(error => {
@@ -75,6 +75,7 @@ export default function Login() {
 
     <View style={styles.container}>
       <Image source={logo} />
+      <Text style={styles.Texto}> Acesso Logista</Text>
 
       <View style={styles.form}>
       
@@ -106,14 +107,14 @@ export default function Login() {
           <Text style={styles.buttontext}> Login</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.buttoncadastro}>
+        <TouchableOpacity onPress={() => navigation.navigate('Cadastro Logista')} style={styles.buttoncadastro}>
           <Text style={styles.buttontext}> Criar conta</Text>
         </TouchableOpacity>
 
-
+        
         <StatusBar style="auto" />
       </View>
-      <Text onPress={() => navigation.navigate('LoginLogista')} style={styles.excluir}> Acesso Logista</Text>
+      <Text onPress={() => navigation.navigate('Login')} style={styles.cliente}> Acesso cliente?</Text>
     </View>
   );
 }
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     alignItems: 'center',
-  },
+    },
 
 
   form: {
@@ -182,7 +183,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 
-  excluir: {
+  cliente: {
+    color: 'black',
+    alignItems:'center',
+    position: 'relative',
+    bottom:0,
+  },
+
+  Texto: {
+    fontSize: 25,
     color: 'black',
     alignItems:'center',
     position: 'relative',
