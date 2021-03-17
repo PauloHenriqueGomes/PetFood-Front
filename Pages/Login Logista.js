@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import logo from '../assets/LogoPet.png';
-import api from '../services/api';
+import api from '../../mobile/services/api';
 
 export default function LoginLogista() {
 

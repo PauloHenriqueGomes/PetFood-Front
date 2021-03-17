@@ -1,4 +1,3 @@
-
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit,Button } from 'react-native';
@@ -75,6 +74,7 @@ export default function Login() {
 
     <View style={styles.container}>
       <Image source={logo} />
+      <Text style={styles.Texto}> Acesso Cliente</Text>
 
       <View style={styles.form}>
       
@@ -113,7 +113,7 @@ export default function Login() {
 
         <StatusBar style="auto" />
       </View>
-      <Text onPress={() => navigation.navigate('LoginLogista')} style={styles.excluir}> Acesso Logista</Text>
+      <Text onPress={() => navigation.navigate('LoginLogista')} style={styles.excluir}> Acesso Logista?</Text>
     </View>
   );
 }
@@ -189,4 +189,11 @@ const styles = StyleSheet.create({
     bottom:0,
   },
 
+  Texto: {
+    fontSize: 25,
+    color: 'black',
+    alignItems:'center',
+    position: 'relative',
+    bottom:0,
+  }
 });

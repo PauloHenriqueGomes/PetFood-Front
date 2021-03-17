@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -160,7 +161,7 @@ export default function AlterarCadastro({route}) {
       <View style={styles.form}>
 
         <TextInput
-          style={styles.imput}
+          style={styles.input}
           placeholder="Nome Completo"
           placeholderTextColor="#999"
           keyboardType="email-address"
@@ -168,10 +169,13 @@ export default function AlterarCadastro({route}) {
           value={nome}
           autoCorrect={false}
           onChangeText={setNome}
+          label="Nome Completo"
+          selectionColor="black"
+          underlineColor="black"
         />
 
         <TextInput
-          style={styles.imput}
+          style={styles.input}
           placeholder="Email"
           placeholderTextColor="#999"
           keyboardType="email-address"
@@ -179,10 +183,13 @@ export default function AlterarCadastro({route}) {
           value={email}
           autoCorrect={false}
           onChangeText={setEmail}
+          label="Email"
+          selectionColor="black"
+          underlineColor="black"
         />
 
         <TextInput
-          style={styles.imput}
+          style={styles.input}
           placeholder="Senha"
           placeholderTextColor="#999"
           keyboardType="email-address"
@@ -190,10 +197,13 @@ export default function AlterarCadastro({route}) {
           value={senha}
           autoCorrect={false}
           onChangeText={setSenha}
+          label="Senha"
+          selectionColor="black"
+          underlineColor="black"
         />
 
         <TextInput
-          style={styles.imput}
+          style={styles.input}
           placeholder="Celular"
           placeholderTextColor="#999"
           keyboardType="numeric"
@@ -201,10 +211,13 @@ export default function AlterarCadastro({route}) {
           value={celular}
           autoCorrect={false}
           onChangeText={setCelular}
+          label="Celular"
+          selectionColor="black"
+          underlineColor="black"
         />
 
         <TextInput
-          style={styles.imput}
+          style={styles.input}
           placeholder="CEP"
           placeholderTextColor="#999"
           keyboardType="numeric"
@@ -212,10 +225,13 @@ export default function AlterarCadastro({route}) {
           value={cep}
           autoCorrect={false}
           onChangeText={setCep}
+          label="CEP"
+          selectionColor="black"
+          underlineColor="black"
         />
 
         <TextInput
-          style={styles.imput}
+          style={styles.input}
           placeholder="Rua"
           placeholderTextColor="#999"
           keyboardType="email-address"
@@ -223,10 +239,13 @@ export default function AlterarCadastro({route}) {
           value={rua}
           autoCorrect={false}
           onChangeText={setRua}
+          label="Rua"
+          selectionColor="black"
+          underlineColor="black"
         />
 
         <TextInput
-          style={styles.imput}
+          style={styles.input}
           placeholder="Numero"
           placeholderTextColor="#999"
           keyboardType="numeric"
@@ -234,10 +253,13 @@ export default function AlterarCadastro({route}) {
           value={numero}
           autoCorrect={false}
           onChangeText={setNumero}
+          label="Numero"
+          selectionColor="black"
+          underlineColor="black"
         />
 
         <TextInput
-          style={styles.imput}
+          style={styles.input}
           placeholder="Cidade"
           placeholderTextColor="#999"
           keyboardType="email-adress"
@@ -245,10 +267,13 @@ export default function AlterarCadastro({route}) {
           value={cidade}
           autoCorrect={false}
           onChangeText={setCidade}
+          label="Cidade"
+          selectionColor="black"
+          underlineColor="black"
         />
 
         <TextInput
-          style={styles.imput}
+          style={styles.input}
           placeholder="UF"
           placeholderTextColor="#999"
           keyboardType="email-adress"
@@ -256,6 +281,9 @@ export default function AlterarCadastro({route}) {
           value={uf}
           autoCorrect={false}
           onChangeText={setUf}
+          label="UF"
+          selectionColor="black"
+          underlineColor="black"
         />
 
         <TouchableOpacity onPress={handleSignClick} style={styles.button}>
@@ -267,8 +295,9 @@ export default function AlterarCadastro({route}) {
           <Text style={styles.buttontext}> Sair</Text>
         </TouchableOpacity>
 
-          <Text onPress={excluir} style={styles.excluir}> Excluir conta</Text>
-        
+        <TouchableOpacity onPress={excluir} style={styles.buttonsair}>
+          <Text style={styles.buttontext}> Excluir conta</Text>
+        </TouchableOpacity>
 
 
 
@@ -307,7 +336,7 @@ const styles = StyleSheet.create({
   },
 
   buttonsair: {
-    height: 42,
+    height: 30,
     backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
@@ -320,21 +349,15 @@ const styles = StyleSheet.create({
     color: 'white'
   },
 
-  excluir: {
-    color: 'black'
-  },
-
-
-
-  imput: {
+  input: {
     borderWidth: 1,
     borderColor: '#ddd',
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     fontSize: 16,
     color: '#444',
     height: 44,
-    marginTop: 20,
-    borderRadius: 8,
+    marginTop: 30,
+    borderRadius: 8
   },
 
 
