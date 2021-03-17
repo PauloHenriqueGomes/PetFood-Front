@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 //export default api;
-const baseURL= 'http://192.168.1.17:8080';
+const baseURL= 'http://localhost:8080';
 
 
 export default {

@@ -7,18 +7,57 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../services/api';
 
-export default function AlterarLogista() {
+export default function AlterarLogista({route}) {
 
   const navigation = useNavigation();
 
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [cnpj, setCnpj] = useState('');
   const [celular, setCelular] = useState('');
   const [cep, setCep] = useState('');
   const [rua, setRua] = useState('');
   const [numero, setNumero] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [uf, setUf] = useState('');
 
+  React.useEffect(() => {
+    if (route.params?.sellerEmail) {
+      console.log("AlterarLojista sellerEmail: " + route.params?.sellerEmail);
+
+      let api = axios.create({
+        baseURL: 'http://localhost:8080'
+      });
+    
+      let requestHeaders = {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+          'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
+        }
+      }
+    
+      api.get('/seller/find/email?email=' + route.params?.sellerEmail, [requestHeaders])
+      .then(function (response) {
+        setNome(response.data.name);
+        setEmail(response.data.email);
+        setCnpj(response.data.registrationInfos.document);
+        setCelular(response.data.registrationInfos.cellPhone);
+        setCep(response.data.registrationInfos.cep);
+        setRua(response.data.registrationInfos.address);
+        setNumero(response.data.registrationInfos.numberAddress);
+        setCidade(response.data.registrationInfos.city);
+        setUf(response.data.registrationInfos.uf);
+      }).catch(error => {
+        if (error.response) {
+          alert(error.response.data);
+          } else {
+          alert(error);
+          }
+      });
+    }
+  }, [route.params?.userEmail]);
   
 
 
@@ -28,10 +67,10 @@ export default function AlterarLogista() {
 
 
   const handleSignClick = async () => {
-    if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
+    if (nome != '' && email != '' && senha != '' && cnpj != '' && celular != '' && cep != '' && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://192.168.1.17:8080/seller/update?categories=FOOD&cityZone=NORTH&name='+nome, {
+      axios('http://localhost:8080/seller/update?categories=FOOD&cityZone=NORTH&document='+cnpj, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -45,15 +84,12 @@ export default function AlterarLogista() {
           'email': email,
           'name': nome,
           'password': senha,
-          'registrationInfos': {
-            'address': rua,
-            'cellPhone': celular,
-            'cep': cep,
-            'city': 'Sp',
-            'document': '3',
-            'numberAddress': numero,
-            'uf': 'SP'
-          }
+          'address': rua,
+          'cellPhone': celular,
+          'cep': cep,
+          'city': cidade,
+          'numberAddress': numero,
+          'uf': uf
         })
       })
         .then(function (response) {
@@ -79,10 +115,10 @@ export default function AlterarLogista() {
 
 
   const excluir = async () => {
-    if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
+    if (nome != '') {
 
 
-      axios('http://192.168.1.17:8080/seller/delete?name='+nome, {
+      axios('http://localhost:8080/seller/delete?name='+nome, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -90,22 +126,7 @@ export default function AlterarLogista() {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
           'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
-        },
-        data: JSON.stringify({
-          'birthdayDate': '2021-03-04T20:27:36.486Z',
-          'email': email,
-          'name': nome,
-          'password': senha,
-          'registrationInfos': {
-            'address': rua,
-            'cellPhone': celular,
-            'cep': cep,
-            'city': 'Sp',
-            'document': '3',
-            'numberAddress': numero,
-            'uf': 'SP'
-          }
-        })
+        }
       })
         .then(function (response) {
           console.log(response);
@@ -122,7 +143,7 @@ export default function AlterarLogista() {
           }
           });
     } else {
-      alert("Preencha os campos!");
+      alert("Preencha o nome!");
     }
   }
 
@@ -141,7 +162,7 @@ export default function AlterarLogista() {
     <View style={styles.container}>
 
       <View style={styles.form}>
-
+        
         <TextInput
           style={styles.imput}
           placeholder="Nome Completo"
@@ -217,6 +238,28 @@ export default function AlterarLogista() {
           value={numero}
           autoCorrect={false}
           onChangeText={setNumero}
+        />
+
+        <TextInput
+          style={styles.imput}
+          placeholder="Cidade"
+          placeholderTextColor="#999"
+          keyboardType="email-adress"
+          autoCapitalize="none"
+          value={cidade}
+          autoCorrect={false}
+          onChangeText={setCidade}
+        />
+
+        <TextInput
+          style={styles.imput}
+          placeholder="UF"
+          placeholderTextColor="#999"
+          keyboardType="email-adress"
+          autoCapitalize="none"
+          value={uf}
+          autoCorrect={false}
+          onChangeText={setUf}
         />
 
         <TouchableOpacity onPress={handleSignClick} style={styles.button}>

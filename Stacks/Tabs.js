@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoiding
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import axios from 'axios';
 import Login from '../../mobile/Pages/Login';
 import Cadastro from '../../mobile/Pages/Cadastro';
 import Home from '../../mobile/Pages/Home';
@@ -16,13 +16,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const Tab = createBottomTabNavigator();
 const myIcon = <Icon name="rocket" size={30} color="#900" />;
 
-export default function Tabs() {
-
-
+export default function Tabs({route}) {
   return (
-
-
-
     <Tab.Navigator activcolor='#d3d3d3'>
 
       <Tab.Screen name="Home"component={Home} 
@@ -43,7 +38,7 @@ export default function Tabs() {
         (<Icon  name="clipboard"color ={'#808080'} size={28}/>),
         }}
         />
-      <Tab.Screen name="Perfil" component={AlterarCadastro} 
+      <Tab.Screen name="Perfil" component={AlterarCadastro} initialParams={{userEmail: route.params?.email}}
       options={{
         tabBarIcon:({focused})=>
         (<Icon  name="user"color ={'#808080'} size={28}/>),
@@ -51,7 +46,6 @@ export default function Tabs() {
         />
 
     </Tab.Navigator>
-
   );
 
 

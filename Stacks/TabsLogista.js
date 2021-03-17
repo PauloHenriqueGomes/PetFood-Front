@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const Tab = createBottomTabNavigator();
 const myIcon = <Icon name="rocket" size={30} color="#900" />;
 
-export default function TabsLogista() {
+export default function TabsLogista({route}) {
 
 
   return (
@@ -40,7 +40,7 @@ export default function TabsLogista() {
         (<Icon  name="clipboard"color ={'#808080'} size={28}/>),
         }}
         />
-      <Tab.Screen name="Perfil" component={AlterarLogista} 
+      <Tab.Screen name="Perfil" component={AlterarLogista} initialParams={{sellerEmail: route.params?.email}}
       options={{
         tabBarIcon:({focused})=>
         (<Icon  name="user"color ={'#808080'} size={28}/>),

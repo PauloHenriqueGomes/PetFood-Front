@@ -7,17 +7,56 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../../mobile/services/api';
 
-export default function AlterarCadastro() {
+export default function AlterarCadastro({route}) {
 
   const navigation = useNavigation();
-
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [cpf, setCpf] = useState('');
   const [celular, setCelular] = useState('');
   const [cep, setCep] = useState('');
   const [rua, setRua] = useState('');
   const [numero, setNumero] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [uf, setUf] = useState('');
+
+  React.useEffect(() => {
+    if (route.params?.userEmail) {
+      console.log("AlterarCadastro userEmail: " + route.params?.userEmail);
+
+      let api = axios.create({
+        baseURL: 'http://localhost:8080'
+      });
+    
+      let requestHeaders = {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+          'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
+        }
+      }
+    
+      api.get('/user/find/email?email=' + route.params?.userEmail, [requestHeaders])
+      .then(function (response) {
+        setNome(response.data.name);
+        setEmail(response.data.email);
+        setCpf(response.data.registrationInfos.document);
+        setCelular(response.data.registrationInfos.cellPhone);
+        setCep(response.data.registrationInfos.cep);
+        setRua(response.data.registrationInfos.address);
+        setNumero(response.data.registrationInfos.numberAddress);
+        setCidade(response.data.registrationInfos.city);
+        setUf(response.data.registrationInfos.uf);
+      }).catch(error => {
+        if (error.response) {
+          alert(error.response.data);
+          } else {
+          alert(error);
+          }
+      });
+    }
+  }, [route.params?.userEmail]);
 
 
 
@@ -26,10 +65,10 @@ export default function AlterarCadastro() {
 
 
   const handleSignClick = async () => {
-    if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
+    if (nome != '' && email != '' && senha != '' && cpf != '' && celular != '' && cep != '' && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://192.168.1.17:8080/user/update?cityZone=EAST&name='+nome, {
+      axios('http://localhost:8080/user/update?cityZone=EAST&document='+cpf, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -43,31 +82,26 @@ export default function AlterarCadastro() {
           'email': email,
           'name': nome,
           'password': senha,
-          'registrationInfos': {
-            'address': rua,
-            'cellPhone': celular,
-            'cep': cep,
-            'city': 'Sp',
-            'document': '3',
-            'numberAddress': numero,
-            'uf': 'SP'
-          }
+          'address': rua,
+          'cellPhone': celular,
+          'cep': cep,
+          'city': cidade,
+          'numberAddress': numero,
+          'uf': uf
         })
-      })
-        .then(function (response) {
-          console.log(response);
+      }).then(function (response) {
+        console.log(response);
           alert(response.data);
           navigation.reset({
             routes: [{ name: 'Login' }]
           });
-
-        }).catch(error => {
-          if (error.response) {
+      }).catch(error => {
+        if (error.response) {
           alert(error.response.data);
-          } else {
+        } else {
           alert(error);
-          }
-          });
+        }
+      });
     } else {
       alert("Preencha os campos!");
     }
@@ -77,10 +111,10 @@ export default function AlterarCadastro() {
 
 
   const excluir = async () => {
-    if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
+    if (nome != '') {
 
 
-      axios('http://192.168.1.17:8080/user/delete?name='+nome, {
+      axios('http://localhost:8080/user/delete?name='+nome, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -88,22 +122,7 @@ export default function AlterarCadastro() {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
           'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
-        },
-        data: JSON.stringify({
-          'birthdayDate': '2021-03-04T20:27:36.486Z',
-          'email': email,
-          'name': nome,
-          'password': senha,
-          'registrationInfos': {
-            'address': rua,
-            'cellPhone': celular,
-            'cep': cep,
-            'city': 'Sp',
-            'document': '3',
-            'numberAddress': numero,
-            'uf': 'SP'
-          }
-        })
+        }
       })
         .then(function (response) {
           console.log(response);
@@ -114,13 +133,13 @@ export default function AlterarCadastro() {
 
         }).catch(error => {
           if (error.response) {
-          alert(error.response.data);
+            alert(error.response.data);
           } else {
-          alert(error);
+            alert(error);
           }
-          });
+        });
     } else {
-      alert("Preencha os campos!");
+      alert("Preencha o nome!");
     }
   }
 
@@ -215,6 +234,28 @@ export default function AlterarCadastro() {
           value={numero}
           autoCorrect={false}
           onChangeText={setNumero}
+        />
+
+        <TextInput
+          style={styles.imput}
+          placeholder="Cidade"
+          placeholderTextColor="#999"
+          keyboardType="email-adress"
+          autoCapitalize="none"
+          value={cidade}
+          autoCorrect={false}
+          onChangeText={setCidade}
+        />
+
+        <TextInput
+          style={styles.imput}
+          placeholder="UF"
+          placeholderTextColor="#999"
+          keyboardType="email-adress"
+          autoCapitalize="none"
+          value={uf}
+          autoCorrect={false}
+          onChangeText={setUf}
         />
 
         <TouchableOpacity onPress={handleSignClick} style={styles.button}>

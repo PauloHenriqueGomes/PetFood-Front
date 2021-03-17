@@ -28,7 +28,7 @@ export default function Login() {
     if (email != '' && senha != '') {
 
       let api = axios.create({
-        baseURL: 'http://192.168.1.17:8080'
+        baseURL: 'http://localhost:8080'
       });
 
       let requestHeaders = {
@@ -48,7 +48,7 @@ export default function Login() {
           console.log(response);
           alert(response.data);
           navigation.reset({
-            routes: [{ name: 'Tabs' }]
+            routes: [{ name: 'Tabs', params: {email}}]
           });
 
         }).catch(error => {

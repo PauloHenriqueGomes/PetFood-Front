@@ -14,10 +14,13 @@ export default function Cadastro() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [cpf, setCpf] = useState('');
   const [celular, setCelular] = useState('');
   const [cep, setCep] = useState('');
   const [rua, setRua] = useState('');
   const [numero, setNumero] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [uf, setUf] = useState('');
 
 
 
@@ -26,10 +29,10 @@ export default function Cadastro() {
 
 
   const handleSignClick = async () => {
-    if (nome != '' && email != '' && senha != '' && celular != '' && cep != '' && rua != '' && numero != '') {
+    if (nome != '' && email != '' && senha != '' && cpf != '' && celular != '' && cep != '' && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://192.168.1.17:8080/user/create?cityZone=EAST', {
+      axios('http://localhost:8080/user/create?cityZone=EAST', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -44,10 +47,10 @@ export default function Cadastro() {
             'address': rua,
             'cellPhone': celular,
             'cep': cep,
-            'city': 'Sp',
-            'document': '3',
+            'city': cidade,
+            'document': cpf,
             'numberAddress': numero,
-            'uf': 'SP'
+            'uf': uf
           }
         })
       })
@@ -121,6 +124,17 @@ export default function Cadastro() {
 
         <TextInput
           style={styles.imput}
+          placeholder="CPF"
+          placeholderTextColor="#999"
+          keyboardType="numeric"
+          autoCapitalize="none"
+          value={cpf}
+          autoCorrect={false}
+          onChangeText={setCpf}
+        />
+
+        <TextInput
+          style={styles.imput}
           placeholder="Celular"
           placeholderTextColor="#999"
           keyboardType="numeric"
@@ -161,6 +175,28 @@ export default function Cadastro() {
           value={numero}
           autoCorrect={false}
           onChangeText={setNumero}
+        />
+
+        <TextInput
+          style={styles.imput}
+          placeholder="Cidade"
+          placeholderTextColor="#999"
+          keyboardType="email-adress"
+          autoCapitalize="none"
+          value={cidade}
+          autoCorrect={false}
+          onChangeText={setCidade}
+        />
+
+        <TextInput
+          style={styles.imput}
+          placeholder="UF"
+          placeholderTextColor="#999"
+          keyboardType="email-adress"
+          autoCapitalize="none"
+          value={uf}
+          autoCorrect={false}
+          onChangeText={setUf}
         />
 
         <TouchableOpacity onPress={handleSignClick} style={styles.button}>
