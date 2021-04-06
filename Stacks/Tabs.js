@@ -4,13 +4,13 @@ import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoiding
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import axios from 'axios';
-import Login from '../../mobile/Pages/Login';
-import Cadastro from '../../mobile/Pages/Cadastro';
-import Home from '../../mobile/Pages/Home';
+/* import axios from 'axios';
+import Login from '../../mobile/PetFood-Front/Pages/Login';
+import Cadastro from '../../mobile/PetFood-Front/Pages/Cadastro'; */
+import Home from '../Pages/Home';
 import Busca from '../Pages/Busca';
-import AlterarCadastro from '../../mobile/Pages/AlterarCadastro';
-import Pedidos from '../../mobile/Pages/Pedidos';
+import AlterarCadastro from '../Pages/AlterarCadastro';
+import Pedidos from '../Pages/Pedidos';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();

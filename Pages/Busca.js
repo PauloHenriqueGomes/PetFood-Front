@@ -3,17 +3,17 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, FlatList, ScrollView, ListItemText, ListItem,Avatar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import logo from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoPet.png'
-import logoCobasi from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/Cobasi.png';
-import logoPetz from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/Petz.png';
-import logoRacaoForte from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/RacaoForte.png';
-import logoCasaRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/CasaRacao.png';
-import logoReiAquario from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/ReiAquario.png';
-import logoGatoMania from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/GatoMania.png';
-import logoTudoAnimal from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/TudoAnimal.png';
-import logoRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoRaca.png';
-import logoBrinquedo from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoBrinquedo.png';
-import logoRemedio from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoRemedio.png';
+import logo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoPet.png'
+import logoCobasi from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/Cobasi.png';
+import logoPetz from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/Petz.png';
+import logoRacaoForte from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/RacaoForte.png';
+import logoCasaRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/CasaRacao.png';
+import logoReiAquario from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/ReiAquario.png';
+import logoGatoMania from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/GatoMania.png';
+import logoTudoAnimal from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/TudoAnimal.png';
+import logoRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoRaca.png';
+import logoBrinquedo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoBrinquedo.png';
+import logoRemedio from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoRemedio.png';
 
 export default function Busca() {
 

@@ -4,8 +4,8 @@ import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoiding
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native';
 
-import logo from 'C:/Users/paulo.g.silva/PetFood2/mobile/assets/LogoPet.png';
-import Stacks from '../mobile/Stacks/Stacks';
+import logo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoPet.png';
+import Stacks from '../PetFood-Front/Stacks/Stacks';
 
 export default function App() {
 

@@ -1,12 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit} from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import api from '../../mobile/services/api';
 
 export default function AlterarLogista({route}) {
 
@@ -28,7 +27,7 @@ export default function AlterarLogista({route}) {
       console.log("AlterarLojista sellerEmail: " + route.params?.sellerEmail);
 
       let api = axios.create({
-        baseURL: 'http://localhost:8080'
+        baseURL: 'http://192.168.1.17:8080'
       });
     
       let requestHeaders = {
@@ -71,7 +70,7 @@ export default function AlterarLogista({route}) {
     if (nome != '' && email != '' && senha != '' && cnpj != '' && celular != '' && cep != '' && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://localhost:8080/seller/update?categories=FOOD&cityZone=NORTH&document='+cnpj, {
+      axios('http://192.168.1.17:8080/seller/update?categories=FOOD&cityZone=NORTH&document='+cnpj, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -119,7 +118,7 @@ export default function AlterarLogista({route}) {
     if (nome != '') {
 
 
-      axios('http://localhost:8080/seller/delete?name='+nome, {
+      axios('http://192.168.1.17:8080/seller/delete?name='+nome, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -159,9 +158,10 @@ export default function AlterarLogista({route}) {
 
 
   return (
-
+    
+<ScrollView>
     <View style={styles.container}>
-
+      
       <View style={styles.form}>
         
         <TextInput
@@ -308,7 +308,10 @@ export default function AlterarLogista({route}) {
 
         <StatusBar style="auto" />
       </View>
+      
     </View>
+    </ScrollView>
+    
   );
 }
 
@@ -337,7 +340,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     marginTop: 20,
-    marginBottom: 40,
+    marginBottom: 20,
   },
 
   buttonsair: {
@@ -347,7 +350,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     marginTop: 5,
-    marginBottom: 40,
+    marginBottom: 20,
   },
 
   buttontext: {

@@ -12,6 +12,7 @@ import Busca from '../Pages/Busca';
 import AlterarLogista from '../Pages/AlterarLogista';
 import Pedidos from '../Pages/Pedidos';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CadastroProduto from '../Pages/CadastroProduto';
 
 
 
@@ -27,7 +28,7 @@ export default function TabsLogista({route}) {
 
     <Tab.Navigator activcolor='#d3d3d3'>
 
-      <Tab.Screen name="Produtos"component={Home} 
+      <Tab.Screen name="Produtos"component={CadastroProduto} 
       options={{
         tabBarIcon:({focused})=>
         (<Icon  name="home"color ={'#808080'} size={28}/>),

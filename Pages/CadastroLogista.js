@@ -1,11 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
+import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import api from '../services/api';
 
 export default function CadastroLogista() {
 
@@ -32,7 +31,7 @@ export default function CadastroLogista() {
     if (nome != '' && email != '' && senha != '' && cnpj != '' && celular != '' && cep != '' && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://localhost:8080/seller/create?categories=FOOD&cityZone=NORTH', {
+      axios('http://192.168.1.17:8080/seller/create?categories=FOOD&cityZone=NORTH', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -84,8 +83,9 @@ export default function CadastroLogista() {
 
 
   return (
-
+<ScrollView>
     <View style={styles.container}>
+      
 
       <View style={styles.form}>
 
@@ -208,7 +208,9 @@ export default function CadastroLogista() {
 
         <StatusBar style="auto" />
       </View>
+      
     </View>
+    </ScrollView>
   );
 }
 

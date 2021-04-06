@@ -4,8 +4,7 @@ import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoiding
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import logo from '../assets/LogoPet.png';
-import api from '../../mobile/services/api';
+import logo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoPet.png';
 
 export default function Login() {
 
@@ -27,7 +26,7 @@ export default function Login() {
     if (email != '' && senha != '') {
 
       let api = axios.create({
-        baseURL: 'http://localhost:8080'
+        baseURL: 'http://192.168.1.17:8080'
       });
 
       let requestHeaders = {
