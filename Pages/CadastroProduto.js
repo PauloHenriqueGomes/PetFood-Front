@@ -6,7 +6,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function CadastroInfAdicionais() {
+export default function CadastroInfAdicionais({route}) {
 
   const navigation = useNavigation();
 
@@ -20,6 +20,39 @@ export default function CadastroInfAdicionais() {
   const [InfAdicionais, setInfAdicionais] = useState('');
   
   
+/*   React.useEffect(() => {
+    if (route.params?.userEmail) {
+      console.log("AlterarCadastro userEmail: " + route.params?.userEmail);
+
+      let api = axios.create({
+        baseURL: 'http://192.168.1.19:8080'
+      });
+    
+      let requestHeaders = {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+          'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
+        }
+      }
+    
+      api.get('/user/find/email?email=' + route.params?.userEmail, [requestHeaders])
+      .then(function (response) {
+        setvendedor(response.data.name);
+
+      }).catch(error => {
+        if (error.response) {
+          alert(error.response.data);
+          } else {
+          alert(error);
+          }
+      });
+    }
+  }, [route.params?.userEmail]); */
+
+
+
+
 
 
 
@@ -30,7 +63,7 @@ export default function CadastroInfAdicionais() {
     if (InfAdicionais != ''  && marca != '' && descricao != '' && preco != '' && promo != '' && vendedor != '' && estoque != '' && titulo != '' ) {
 
 
-      axios('http://localhost:8080/product/create?category=FOOD', {
+      axios('http://192.168.1.19:8080/product/create?category=FOOD', {
         method: 'POST',
         headers: {
           'Acpromot': 'application/json',
@@ -46,6 +79,7 @@ export default function CadastroInfAdicionais() {
           'sellerName': vendedor,
           'stock': estoque,
           'title': titulo,
+          'imageUrl': "http://teste.jpg"
             
         })
       })
@@ -53,7 +87,7 @@ export default function CadastroInfAdicionais() {
           console.log(response);
           alert(response.data);
           navigation.reset({
-            routes: [{ name: 'CadastroProduto' }]
+            routes: [{ name: 'TabsLogista' }]
           });
 
         }).catch(error => {
@@ -69,14 +103,64 @@ export default function CadastroInfAdicionais() {
   }
 
 
+
+     //===========PESQUISAR PRODUTO========================
+
+
+     const handleSignClickPesquisar = async () => {
+      if (vendedor != '' && titulo != '' ) {
+  
+  
+        axios('http://192.168.1.19:8080/product/find/title/seller?sellerName='+vendedor+'&title='+titulo, {
+          method: 'GET',
+          headers: {
+            'Acpromot': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+            'Access-Control-Allow-Headers': 'Origin, Methods, Acpromot, Content-Type'
+          },
+          data: JSON.stringify({
+            'additionalInfo': InfAdicionais,
+            'brand': marca,
+            'description': descricao,
+            'price': preco,
+            'pricePromotion': promo,
+            'sellerName': vendedor,
+            'stock': estoque,
+            'title': titulo,
+          })
+        }).then(function (response) {
+
+          setmarca(response.data.brand);
+          setdescricao(response.data.description);
+          setpreco(response.data.price.toString());
+          setpromo(response.data.pricePromotion.toString());
+          setestoque(response.data.stock.toString());
+          setInfAdicionais(response.data.additionalInfo);
+
+
+        }).catch(error => {
+          if (error.response) {
+            alert(error.response.data);
+          } else {
+            alert(error);
+          }
+        });
+      } else {
+        alert("Preencha os campos!");
+      }
+    }
+
+
    //===========ALTERAR PRODUTO========================
 
 
   const handleSignClickAlterar = async () => {
-    if (InfAdicionais != ''  && marca != '' && cpf != '' && preco != '' && promo != '' && vendedor != '' && estoque != '' && titulo != '' ) {
+    if (InfAdicionais != ''  && marca != ''  && preco != '' && promo != '' && vendedor != '' && estoque != '' && titulo != '' ) {
 
 
-      axios('http://192.168.1.17:8080/product/update?category=FOOD&sellerName'+vendedor+'&title='+titulo, {
+      axios('http://192.168.1.19:8080/product/update?category=FOOD&sellerName='+vendedor+'&title='+titulo, {
         method: 'PUT',
         headers: {
           'Acpromot': 'application/json',
@@ -92,14 +176,15 @@ export default function CadastroInfAdicionais() {
           'price': preco,
           'pricePromotion': promo,
           'sellerName': vendedor,
-          'stock': estoque,
           'title': titulo,
+          'stock': estoque,
+          'imageUrl': "http://teste.jpg"
         })
       }).then(function (response) {
         console.log(response);
           alert(response.data);
           navigation.reset({
-            routes: [{ name: 'CadastroProduto' }]
+            routes: [{ name: 'TabsLogista' }]
           });
       }).catch(error => {
         if (error.response) {
@@ -122,7 +207,7 @@ export default function CadastroInfAdicionais() {
       if (titulo != '') {
   
   
-        axios('http://192.168.1.17:8080/product/delete?sellerName='+vendedor+'&title='+titulo, {
+        axios('http://192.168.1.19:8080/product/delete?sellerName='+vendedor+'&title='+titulo, {
           method: 'DELETE',
           headers: {
             'Acpromot': 'application/json',
@@ -136,7 +221,7 @@ export default function CadastroInfAdicionais() {
             console.log(response);
             alert(response.data);
             navigation.reset({
-              routes: [{ name: 'CadastroProduto' }]
+              routes: [{ name: 'TabsLogista' }]
             });
   
           }).catch(error => {
@@ -267,7 +352,7 @@ export default function CadastroInfAdicionais() {
           <Text style={styles.buttontext}> Cadastrar produto</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleSignClickAlterar} style={styles.button}>
+        <TouchableOpacity onPress={handleSignClickPesquisar} style={styles.button}>
           <Text style={styles.buttontext}> Consultar produto</Text>
         </TouchableOpacity>
 

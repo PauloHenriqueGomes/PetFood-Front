@@ -27,7 +27,7 @@ export default function LoginLogista() {
     if (email != '' && senha != '') {
 
       let api = axios.create({
-        baseURL: 'http://192.168.1.17:8080'
+        baseURL: 'http://192.168.1.19:8080'
       });
 
       let requestHeaders = {

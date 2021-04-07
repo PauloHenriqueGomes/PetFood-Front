@@ -28,10 +28,10 @@ export default function CadastroLogista() {
 
 
   const handleSignClick = async () => {
-    if (nome != '' && email != '' && senha != '' && cnpj != '' && celular != '' && cep != '' && rua != '' && numero != '' && cidade != '' && uf != '') {
+    if (nome != '' && email.includes('@') && senha != '' && cnpj.length > 13 && celular.length > 10 && cep.length > 7 && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://192.168.1.17:8080/seller/create?categories=FOOD&cityZone=NORTH', {
+      axios('http://192.168.1.19:8080/seller/create?categories=FOOD&cityZone=NORTH', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -68,7 +68,7 @@ export default function CadastroLogista() {
           }
           });
     } else {
-      alert("Preencha os campos!");
+      alert("Preencha os campos corretamente!");
     }
   }
 

@@ -26,7 +26,7 @@ export default function AlterarCadastro({route}) {
       console.log("AlterarCadastro userEmail: " + route.params?.userEmail);
 
       let api = axios.create({
-        baseURL: 'http://192.168.1.17:8080'
+        baseURL: 'http://192.168.1.19:8080'
       });
     
       let requestHeaders = {
@@ -45,7 +45,7 @@ export default function AlterarCadastro({route}) {
         setCelular(response.data.registrationInfos.cellPhone);
         setCep(response.data.registrationInfos.cep);
         setRua(response.data.registrationInfos.address);
-        setNumero(response.data.registrationInfos.numberAddress);
+        setNumero(response.data.registrationInfos.numberAddress.toString());
         setCidade(response.data.registrationInfos.city);
         setUf(response.data.registrationInfos.uf);
       }).catch(error => {
@@ -68,7 +68,7 @@ export default function AlterarCadastro({route}) {
     if (nome != '' && email != '' && senha != '' && cpf != '' && celular != '' && cep != '' && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://192.168.1.17:8080/user/update?cityZone=EAST&document='+cpf, {
+      axios('http://192.168.1.19:8080/user/update?cityZone=EAST&document='+cpf, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -114,7 +114,7 @@ export default function AlterarCadastro({route}) {
     if (nome != '') {
 
 
-      axios('http://192.168.1.17:8080/user/delete?name='+nome, {
+      axios('http://192.168.1.19:8080/user/delete?name='+nome, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',

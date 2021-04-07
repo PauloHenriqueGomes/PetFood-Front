@@ -27,7 +27,7 @@ export default function AlterarLogista({route}) {
       console.log("AlterarLojista sellerEmail: " + route.params?.sellerEmail);
 
       let api = axios.create({
-        baseURL: 'http://192.168.1.17:8080'
+        baseURL: 'http://192.168.1.19:8080'
       });
     
       let requestHeaders = {
@@ -46,7 +46,7 @@ export default function AlterarLogista({route}) {
         setCelular(response.data.registrationInfos.cellPhone);
         setCep(response.data.registrationInfos.cep);
         setRua(response.data.registrationInfos.address);
-        setNumero(response.data.registrationInfos.numberAddress);
+        setNumero(response.data.registrationInfos.numberAddress.toString());
         setCidade(response.data.registrationInfos.city);
         setUf(response.data.registrationInfos.uf);
       }).catch(error => {
@@ -70,7 +70,7 @@ export default function AlterarLogista({route}) {
     if (nome != '' && email != '' && senha != '' && cnpj != '' && celular != '' && cep != '' && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://192.168.1.17:8080/seller/update?categories=FOOD&cityZone=NORTH&document='+cnpj, {
+      axios('http://192.168.1.19:8080/seller/update?categories=FOOD&cityZone=NORTH&document='+cnpj, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -118,7 +118,7 @@ export default function AlterarLogista({route}) {
     if (nome != '') {
 
 
-      axios('http://192.168.1.17:8080/seller/delete?name='+nome, {
+      axios('http://192.168.1.19:8080/seller/delete?name='+nome, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',

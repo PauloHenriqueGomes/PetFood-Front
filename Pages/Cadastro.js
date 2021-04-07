@@ -28,10 +28,10 @@ export default function Cadastro() {
 
 
   const handleSignClick = async () => {
-    if (nome != '' && email != '' && senha != '' && cpf != '' && celular != '' && cep != '' && rua != '' && numero != '' && cidade != '' && uf != '') {
+    if (nome != '' && email.includes('@') && senha != '' && cpf.length > 10 && celular.length > 10 && cep.length > 7 && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://192.168.1.17:8080/user/create?cityZone=EAST', {
+      axios('http://192.168.1.19:8080/user/create?cityZone=EAST', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -68,7 +68,7 @@ export default function Cadastro() {
           }
           });
     } else {
-      alert("Preencha os campos!");
+      alert("Preencha os campos corretamente!");
     }
   }
 
@@ -91,8 +91,9 @@ export default function Cadastro() {
 
         <TextInput
           style={styles.imput}
-          placeholder="Nome completo"
-          placeholderTextColor="#999"
+          label="teste"
+/*           placeholder="Nome completo"
+          placeholderTextColor="#999" */
           keyboardType="email-address"
           autoCapitalize="none"
           value={nome}

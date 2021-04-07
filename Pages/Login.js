@@ -23,10 +23,10 @@ export default function Login() {
   //===========Email senha COM validação========================
 
   const handleSignClick = async () => {
-    if (email != '' && senha != '') {
+    if (email != '' && senha != '' ) {
 
       let api = axios.create({
-        baseURL: 'http://192.168.1.17:8080'
+        baseURL: 'http://192.168.1.19:8080'
       });
 
       let requestHeaders = {
@@ -57,9 +57,13 @@ export default function Login() {
           }
           });
 
-    } else {
-      alert("Preencha os campos!");
     }
+  
+    
+    else {
+      alert("Email ou senha invalidos");
+    }
+    
   }
 
 
