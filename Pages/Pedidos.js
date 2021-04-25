@@ -1,138 +1,239 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, FlatList, SafeAreaView, Avatar} from 'react-native';
-/* import { Avatar } from 'react-native-paper';
- */ 
-
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-      image: require('C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/TudoAnimal.png')
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d723',
-        title: 'Third Itemm',
-      },
-  ];
-  
-  const Item = ({ title }) => (
-    <View style={styles.item}>
-
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
-  
-  const Pedidos = () => {
-    const renderItem = ({ item }) => (
-      <Item title={item.title} />
-    );
+import React, { useState, useCallback, useEffect } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  RefreshControl,
+  TextInput,
+} from 'react-native';
+import Axios from 'axios';
+import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
-    
-  
-    return (
+export default function Pedidos() {
+  const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
+/*   const [users, setUsers] = useState([]);
 
-      <SafeAreaView style={styles.container}>
- 
+  useEffect(() => {
+    Axios.get('https://randomuser.me/api/?results=5').then((res) => {
+      setUsers(res.data.results);
+    });
+  }, []); */
 
-        <FlatList
 
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+
+
+
+
+        <View style={styles.form}>
+
+
+          <Text style={styles.LojaDest}>Seus pedidos</Text>
+
+          <TouchableOpacity  style={styles.bannerlojas}>
+            <Text style={styles.buttontext}> Pedido 1</Text>
+            <Text style={styles.buttontext2}> Ração Pedigree cachorro</Text>
+          </TouchableOpacity>
           
+          <TouchableOpacity  style={styles.bannerlojas}>
+          <Text style={styles.buttontext}> Pedido 2</Text>
+          <Text style={styles.buttontext2}> Ração Pedigree gato</Text>
+          </TouchableOpacity>
 
-        />
-        
-      </SafeAreaView>
-    );
-  };
-  
+          <TouchableOpacity  style={styles.bannerlojas}>
+          <Text style={styles.buttontext}> Pedido 3</Text>
+            <Text style={styles.buttontext2}> Ração Premier cachorro</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity  style={styles.bannerlojas}>
+          <Text style={styles.buttontext}> Pedido 4</Text>
+            <Text style={styles.buttontext2}> Ração Premier gato</Text>
+          </TouchableOpacity>
+
+        </View>
 
 
-  
-  export default Pedidos;
 
 
+      </View>
+    </ScrollView>
+  );
+}
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    alignItems: 'center',
+  },
 
-
+  bannercategoria:{
+    backgroundColor: 'white',
+    borderColor: '#d9d9d9',
+    borderWidth: 1,
+    borderBottomWidth: 3,
+    marginBottom: 16,
+    flexDirection: 'row',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     
-    item: {
-        borderColor: '#d9d9d9',
-        borderWidth: 1,
-        borderBottomWidth: 3,
-        marginBottom: 16,
-        flexDirection: 'row',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        justifyContent: 'flex-start',
-      },
-      title: {
-        fontSize: 32,
-      },
+  },
+
+  bannerlojas: {
+    borderColor: '#d9d9d9',
+    borderWidth: 1,
+    borderBottomWidth: 3,
+    marginBottom: 16,
+    flexDirection: 'column',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    
+  },
+
+  ImageLoja:{
+
+    width: 50,
+    height: 50,
+    borderRadius: 100 / 2,
+    //borderRadius: 4,
+    //marginBottom: 12,
     
 
-    container: {
+  },
 
-        alignSelf: 'stretch',
-        paddingHorizontal: 30,
-        marginTop: 100,
-    },
+  ImageLoja:{
 
+    width: 50,
+    height: 50,
+    borderRadius: 100 / 2,
+    //borderRadius: 4,
+    //marginBottom: 12,
+    
 
-    form: {
-        alignSelf: 'stretch',
-        paddingHorizontal: 30,
-        marginTop: 30,
-    },
+  },
 
-    button: {
-        height: 42,
-        backgroundColor: 'black',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 8,
-        marginTop: 20,
-        marginBottom: 40,
-    },
-
-    buttontext: {
-        color: 'white'
-    },
+  xbannerlojas: {
+    height: 65,
+    borderColor: '#ddd',
+    backgroundColor: '#b7d5ac',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    marginTop: 20,
+    marginBottom: 1,
+  },
 
 
+  form: {
+    alignSelf: 'stretch',
+    paddingHorizontal: 30,
+    marginTop: 10,
+  },
 
-    imput: {
-        borderWidth: 1,
-        borderColor: '#ddd',
-        paddingHorizontal: 20,
-        fontSize: 16,
-        color: '#444',
-        height: 44,
-        marginTop: 20,
-        borderRadius: 8,
-    },
+  button: {
+    height: 42,
+    backgroundColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    marginTop: 20,
+    marginBottom: 40,
+  },
+
+  buttontext: {
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 15,
+    textAlign: 'justify',
+    
+    justifyContent: 'space-around',
+  },
+  buttontext2: {
+    color: 'black',
+    fontSize: 15,
+ 
+  },
 
 
-    NovaConta: {
-        fontSize: 12,
-        alignItems: 'center',
-        color: '#999',
 
-    }
+  imput: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    paddingHorizontal: 20,
+    fontSize: 16,
+    color: '#444',
+    height: 44,
+    marginTop: 50,
+    marginBottom: 30,
+    borderRadius: 8,
+  },
+
+
+  NovaConta: {
+    fontSize: 12,
+    alignItems: 'center',
+    color: '#999',
+
+  },
+
+  textotelainicial: {
+    color: 'black',
+    fontSize: 20,
+  },
+  LojaDest: {
+    color: 'black',
+    fontSize: 40,
+    alignSelf: 'stretch',
+    paddingHorizontal: 20,
+    marginTop: 80,
+    marginBottom: 40,
+  },
+
+
+
+  lista: {
+    height: 500,
+    alignSelf: 'stretch',
+    //paddingHorizontal: 30,  
+    //marginTop: 5,
+
+    //borderWidth:1,
+    //borderColor: '#ddd',
+    //backgroundColor: 'black',
+    fontSize: 16,
+    marginTop: 20,
+
+    //color:'#444',
+    //height: 44,
+    //borderRadius:8, 
+
+  },
+
+  cardView: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    paddingHorizontal: 30,
+    fontSize: 16,
+    color: '#444',
+    height: 54,
+    marginTop: 1,
+    marginBottom: 5,
+    borderRadius: 8,
+  },
 
 });
-

@@ -32,81 +32,74 @@ export default function Home() {
 
         <View style={styles.form}>
 
-          <TextInput
-            style={styles.imput}
-            
-            placeholder="Digite o produto"
-            placeholderTextColor="#999"
-            keyboardType="email-adress"
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
           <Text style={styles.LojaDest}>Principais categorias</Text>
 
-
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannercategoria}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannercategoria}>
           <Image source={logoRacao} style={styles.ImageLoja} />
            <Text style={styles.buttontext}> Alimentos</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannercategoria}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannercategoria}>
           <Image source={logoBrinquedo} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Brinquedos</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannercategoria}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannercategoria}>
           <Image source={logoRemedio} style={styles.ImageLoja} />
             <Text style={styles.buttontext}> Remedios</Text>
           </TouchableOpacity>
+
+          </ScrollView>
 
 
 
 
           <Text style={styles.LojaDest}>Lojas em destaque</Text>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoPetz} style={styles.ImageLoja} />          
             <Text style={styles.buttontext}> Pets</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista 500</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoCobasi} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Cobasi</Text>
           <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista 500</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoRacaoForte} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Ração Forte</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoCasaRacao} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Casa da Ração</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoReiAquario} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Rei dos Aquario</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoGatoMania} style={styles.ImageLoja} />
             <Text style={styles.buttontext}> Gato Mania</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoTudoAnimal} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Tudo Animal</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoTudoAnimal} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Tudo Animal</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
@@ -160,6 +153,17 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     
+  },
+
+  ImageLoja:{
+
+    width: 50,
+    height: 50,
+    borderRadius: 100 / 2,
+    //borderRadius: 4,
+    //marginBottom: 12,
+    
+
   },
 
   ImageLoja:{
@@ -247,7 +251,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     paddingHorizontal: 20,
     marginTop: 20,
-    marginBottom: 5,
+    marginBottom: 10,
   },
 
 

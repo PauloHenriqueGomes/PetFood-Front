@@ -1,29 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { Component } from 'react';
-import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, FlatList, ScrollView, ListItemText, ListItem,Avatar } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  RefreshControl,
+  TextInput,
+} from 'react-native';
+import Axios from 'axios';
+import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import logo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoPet.png'
 import logoCobasi from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/Cobasi.png';
 import logoPetz from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/Petz.png';
 import logoRacaoForte from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/RacaoForte.png';
 import logoCasaRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/CasaRacao.png';
 import logoReiAquario from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/ReiAquario.png';
-import logoGatoMania from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/GatoMania.png';
-import logoTudoAnimal from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/TudoAnimal.png';
-import logoRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoRaca.png';
-import logoBrinquedo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoBrinquedo.png';
-import logoRemedio from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoRemedio.png';
 
-export default function Busca() {
 
 
 
+export default function Busca() {
   const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
+/*   const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    Axios.get('https://randomuser.me/api/?results=5').then((res) => {
+      setUsers(res.data.results);
+    });
+  }, []); */
 
 
-
-  //render() {
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -38,74 +48,51 @@ export default function Busca() {
             
             placeholder="Digite o produto"
             placeholderTextColor="#999"
-            keyboardType="email-adress"
+            keyboardType="default"
             autoCapitalize="none"
             autoCorrect={false}
           />
 
+          <Text style={styles.LojaDest}>Lojas perto de voce</Text>
 
-
-
-
-          <Text style={styles.LojaDest}>Essas lojas perto de vocee!</Text>
-
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoPetz} style={styles.ImageLoja} />          
             <Text style={styles.buttontext}> Pets</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista 500</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoCobasi} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Cobasi</Text>
           <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista 500</Text>
-
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoRacaoForte} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Ração Forte</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoCasaRacao} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Casa da Ração</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoReiAquario} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Rei dos Aquario</Text>
-            <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
-          <Image source={logoGatoMania} style={styles.ImageLoja} />
-            <Text style={styles.buttontext}> Gato Mania</Text>
-            <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
-          <Image source={logoTudoAnimal} style={styles.ImageLoja} />
-          <Text style={styles.buttontext}> Tudo Animal</Text>
-            <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.bannerlojas}>
-          <Image source={logoTudoAnimal} style={styles.ImageLoja} />
-          <Text style={styles.buttontext}> Tudo Animal</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
           </TouchableOpacity>
 
 
         </View>
 
+
+
+
       </View>
-
-
-
     </ScrollView>
-
-
   );
 }
 
@@ -118,15 +105,17 @@ const styles = StyleSheet.create({
   },
 
   bannercategoria:{
-
-    backgroundColor: '#d3d3d3',
-    paddingBottom: 34,
-    borderRadius: 8,
-    marginBottom: 15,
-    //justifyContent: 'flex-start',
-    flexDirection:'row',
+    backgroundColor: 'white',
+    borderColor: '#d9d9d9',
+    borderWidth: 1,
+    borderBottomWidth: 3,
+    marginBottom: 16,
+    flexDirection: 'row',
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     
   },
 
@@ -141,6 +130,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
+    
   },
 
   ImageLoja:{
@@ -150,6 +140,18 @@ const styles = StyleSheet.create({
     borderRadius: 100 / 2,
     //borderRadius: 4,
     //marginBottom: 12,
+    
+
+  },
+
+  ImageLoja:{
+
+    width: 50,
+    height: 50,
+    borderRadius: 100 / 2,
+    //borderRadius: 4,
+    //marginBottom: 12,
+    
 
   },
 
@@ -182,8 +184,17 @@ const styles = StyleSheet.create({
   },
 
   buttontext: {
+    fontWeight: 'bold',
     color: 'black',
     fontSize: 15,
+    textAlign: 'justify',
+    
+    justifyContent: 'space-around',
+  },
+  buttontext2: {
+    color: 'black',
+    fontSize: 15,
+ 
   },
 
 
@@ -254,4 +265,3 @@ const styles = StyleSheet.create({
   },
 
 });
-

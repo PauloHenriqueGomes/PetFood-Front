@@ -8,11 +8,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import Login from '../Pages/Login';
 import LoginLogista from '../Pages/Login Logista';
 import Cadastro from '../Pages/Cadastro';
+import CadastroLogista from '../Pages/CadastroLogista';
+import Carrinho from '../Pages/Carrinho';
 import Home from '../Pages/Home';
 import Busca from '../Pages/Busca';
 import Tabs from '../Stacks/Tabs';
 import TabsLogista from '../Stacks/TabsLogista';
-import CadastroLogista from '../Pages/CadastroLogista';
+
 
 const Stack = createStackNavigator();
 
@@ -30,6 +32,7 @@ export default function Stacks() {
       <Stack.Screen options={{ headerShown: false }} name="LoginLogista" component={LoginLogista}/>
       <Stack.Screen name="Cadastro" component={Cadastro} />
       <Stack.Screen name="Cadastro Lojista" component={CadastroLogista} />
+      <Stack.Screen name="Carrinho" component={Carrinho} />
       <Stack.Screen options={{ headerShown: false }} name="Tabs" component={Tabs}/>
       <Stack.Screen options={{ headerShown: false }} name="TabsLogista" component={TabsLogista}
       />

@@ -92,8 +92,8 @@ export default function Cadastro() {
         <TextInput
           style={styles.imput}
           label="teste"
-/*           placeholder="Nome completo"
-          placeholderTextColor="#999" */
+          placeholder="Nome completo"
+          placeholderTextColor="#999"
           keyboardType="email-address"
           autoCapitalize="none"
           value={nome}

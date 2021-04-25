@@ -83,7 +83,7 @@ export default function LoginLogista() {
           style={styles.imput}
           placeholder="Seu Email"
           placeholderTextColor="#999"
-          keyboardType="email-address"
+          keyboardType="default"
           autoCapitalize="none"
           autoCorrect={false}
           value={email}
