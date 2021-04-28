@@ -66,11 +66,11 @@ export default function Carrinho( { navigation }) {
           'products': [{
 
             'quantity': 1,
-            'title': 'Racao1',
+            'title': 'Colera',
           }],
-            'sellerName': 'paulo',
+            'sellerName': 'Rodrigo',
             'shippingPrice': 1,
-            'userName': 'lucas'
+            'userName': 'Bruno'
         })
       })
         .then(function (response) {
@@ -131,12 +131,12 @@ export default function Carrinho( { navigation }) {
                           onPress={() => {
                             if (product.quantity === 1) {
                               return Alert.alert(
-                                `Remove ${product.name}?`,
+                                `Remover ${product.name}?`,
                                 '',
                                 [
-                                  { text: 'Cancel' },
+                                  { text: 'Cancelar' },
                                   {
-                                    text: 'Remove',
+                                    text: 'Remover',
                                     onPress: () => {
                                       const newCart = cart.filter(
                                         (p) => p.id !== product.id

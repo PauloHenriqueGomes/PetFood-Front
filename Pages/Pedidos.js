@@ -9,21 +9,37 @@ import {
   RefreshControl,
   TextInput,
 } from 'react-native';
-import Axios from 'axios';
-import { Alert } from 'react-native';
+import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
 
 export default function Pedidos() {
   const navigation = useNavigation();
-  const [refreshing, setRefreshing] = useState(false);
-/*   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    Axios.get('https://randomuser.me/api/?results=5').then((res) => {
-      setUsers(res.data.results);
-    });
-  }, []); */
+  
+  const handleSignClick = async () => {
+    
+    axios('http://192.168.1.19:8080/request/update/status?id=608896c582ccb071c23f0d16&status=CANCELED', {
+      method: 'PATCH',
+
+    })
+      .then(function (response) {
+        console.log(response);
+        alert(response.data);
+        navigation.reset({
+          routes: [{ name: 'Pedidos' }]
+        });
+
+      }).catch(error => {
+        if (error.response) {
+        alert(error.response.data);
+        } else {
+        alert(error);
+        }
+        });
+
+}
+
 
 
   return (
@@ -57,6 +73,14 @@ export default function Pedidos() {
           <Text style={styles.buttontext}> Pedido 4</Text>
             <Text style={styles.buttontext2}> Ração Premier gato</Text>
           </TouchableOpacity>
+
+          
+              <TouchableOpacity onPress={handleSignClick} style={styles.checkoutButton}>
+                <Text style={styles.checkoutButtonText}>
+                  Cancelar pedido
+                </Text>
+              </TouchableOpacity>
+          
 
         </View>
 
@@ -114,6 +138,19 @@ const styles = StyleSheet.create({
     //marginBottom: 12,
     
 
+  },
+
+  checkoutButton: {
+    backgroundColor: '#333',
+    paddingVertical: 14,
+    marginTop: 30,
+    alignItems: 'center',
+  },
+
+  checkoutButtonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: '700',
   },
 
   ImageLoja:{

@@ -93,7 +93,7 @@ export default function CadastroLogista() {
           style={styles.imput}
           placeholder="Nome completo"
           placeholderTextColor="#999"
-          keyboardType="email-address"
+          keyboardType="default"
           autoCapitalize="none"
           value={nome}
           autoCorrect={false}
@@ -104,7 +104,7 @@ export default function CadastroLogista() {
           style={styles.imput}
           placeholder="Email"
           placeholderTextColor="#999"
-          keyboardType="email-address"
+          keyboardType="default"
           autoCapitalize="none"
           value={email}
           autoCorrect={false}
@@ -115,7 +115,7 @@ export default function CadastroLogista() {
           style={styles.imput}
           placeholder="Senha"
           placeholderTextColor="#999"
-          keyboardType="email-address"
+          keyboardType="default"
           autoCapitalize="none"
           value={senha}
           autoCorrect={false}
@@ -126,7 +126,7 @@ export default function CadastroLogista() {
           style={styles.imput}
           placeholder="CNPJ"
           placeholderTextColor="#999"
-          keyboardType="email-address"
+          keyboardType="default"
           autoCapitalize="none"
           value={cnpj}
           autoCorrect={false}
@@ -159,7 +159,7 @@ export default function CadastroLogista() {
           style={styles.imput}
           placeholder="Rua"
           placeholderTextColor="#999"
-          keyboardType="email-address"
+          keyboardType="default"
           autoCapitalize="none"
           value={rua}
           autoCorrect={false}
