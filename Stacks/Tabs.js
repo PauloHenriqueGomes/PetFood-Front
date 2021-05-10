@@ -26,7 +26,7 @@ export default function Tabs({route}) {
         (<Icon  name="home"color ={'#808080'} size={28}/>),
         }}
       />
-      <Tab.Screen name="Busca" component={Busca} 
+      <Tab.Screen name="Busca" component={Busca} initialParams={{userEmail: route.params?.email}}
       options={{
         tabBarIcon:({focused})=>
         (<Icon  name="search"color ={'#808080'} size={28}/>),

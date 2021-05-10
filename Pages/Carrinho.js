@@ -13,90 +13,90 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 import logoCasaRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/CasaRacao.png';
 import logoReiAquario from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/ReiAquario.png';
 
 
-export default function Carrinho( { navigation }) {
+export default function Carrinho({ route }) {
 
+
+  const navigation = useNavigation();
 
 
 
   const [cart, setCart] = useState([
     {
       id: 'PID000101',
-      name: 'Ração Pedigree',
-      company: 'Pedigree',
-      img: 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/CasaRacao.png',
+      name: route.params?.title,
+      company: route.params?.sellername,
+      img: route.params?.imgprod,
       quantity: 1,
-      price: 30,
+      price: route.params?.price,
       perPrice: 30,
     },
-    {
-      id: 'PID000106',
-      name: 'Ração Premier',
-      company: 'Premier',
-      img:
-      'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/ReiAquario.png',
-      quantity: 1,
-      price: 40,
-      perPrice: 40,
-    },
+    /*     {
+          id: 'PID000106',
+          name: 'Ração Premier',
+          company: 'Premier',
+          img:
+          'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/ReiAquario.png',
+          quantity: 1,
+          price: 40,
+          perPrice: 40,
+        }, */
   ]);
   const [shippingMethod, setShippingMethod] = useState('Normal');
 
-  useEffect(() => {
-    StatusBar.setBarStyle('light-content', true);
-  }, []);
 
 
-    //==================FUNÇÃO COMPRAR==================//
+  //==================FUNÇÃO COMPRAR==================//
 
-    const [quantity] = useState('1');
+  const [quantity] = useState('1');
 
-    const handleSignClick = async () => {
-    
-      axios('http://192.168.1.19:8080/request/create', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        data: JSON.stringify({
-          'products': [{
+  const handleSignClick = async () => {
 
-            'quantity': 1,
-            'title': 'Colera',
-          }],
-            'sellerName': 'Rodrigo',
-            'shippingPrice': 1,
-            'userName': 'Bruno'
-        })
+    axios('http://192.168.1.19:8080/request/create', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify({
+        'products': [{
+
+          'quantity': 2,
+          'title': route.params?.title,
+        }],
+        'sellerName': route.params?.sellername,
+        'shippingPrice': route.params?.price,
+        'userName': 'Lucas',
       })
-        .then(function (response) {
-          console.log(response);
-          alert(response.data);
-          navigation.reset({
-            routes: [{ name: 'Pedidos' }]
-          });
+    })
+      .then(function (response) {
+        console.log(response);
+        alert(response.data);
+        navigation.reset({
+          routes: [{ name: 'Pedidos' }]
+        });
 
-        }).catch(error => {
-          if (error.response) {
+      }).catch(error => {
+        if (error.response) {
           alert(error.response.data);
-          } else {
+        } else {
           alert(error);
-          }
-          });
+        }
+      });
 
   }
 
-  
+
   //============================================================
 
   return (
     <View style={styles.container}>
 
-      
+
       <View style={styles.cartContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.cartTitleView}>
@@ -190,7 +190,7 @@ export default function Carrinho( { navigation }) {
                     </View>
                   </View>
                 ))}
-              
+
 
 
               <View style={styles.totalView}>

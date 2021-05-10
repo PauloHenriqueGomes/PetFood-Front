@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit,Button } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import logo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoPet.png';
@@ -23,7 +22,7 @@ export default function Login() {
   //===========Email senha COM validação========================
 
   const handleSignClick = async () => {
-    if (email != '' && senha != '' ) {
+    if (email != '' && senha != '') {
 
       let api = axios.create({
         baseURL: 'http://192.168.1.19:8080'
@@ -39,31 +38,26 @@ export default function Login() {
 
       api.get('/user/login?email=' + email + '&password=' + senha, [requestHeaders])
 
-
-
-
         .then(function (response) {
           console.log(response);
           alert(response.data);
           navigation.reset({
-            routes: [{ name: 'Tabs', params: {email}}]
+            routes: [{ name: 'Tabs', params: { email } }],
+
           });
 
         }).catch(error => {
           if (error.response) {
-          alert(error.response.data);
+            alert(error.response.data);
           } else {
-          alert(error);
+            alert(error);
           }
-          });
-
+        });
     }
-  
-    
+
     else {
       alert("Email ou senha invalidos");
     }
-    
   }
 
 
@@ -80,7 +74,7 @@ export default function Login() {
       <Text style={styles.Texto}> Acesso Cliente</Text>
 
       <View style={styles.form}>
-      
+
 
         <TextInput
           style={styles.imput}
@@ -187,16 +181,16 @@ const styles = StyleSheet.create({
 
   excluir: {
     color: 'black',
-    alignItems:'center',
+    alignItems: 'center',
     position: 'relative',
-    bottom:0,
+    bottom: 0,
   },
 
   Texto: {
     fontSize: 25,
     color: 'black',
-    alignItems:'center',
+    alignItems: 'center',
     position: 'relative',
-    bottom:0,
+    bottom: 0,
   }
 });

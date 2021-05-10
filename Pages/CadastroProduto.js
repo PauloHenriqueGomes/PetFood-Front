@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function CadastroInfAdicionais({route}) {
+export default function CadastroInfAdicionais({ route }) {
 
   const navigation = useNavigation();
 
@@ -18,49 +17,14 @@ export default function CadastroInfAdicionais({route}) {
   const [vendedor, setvendedor] = useState('');
   const [estoque, setestoque] = useState('');
   const [InfAdicionais, setInfAdicionais] = useState('');
-  
-  
-/*   React.useEffect(() => {
-    if (route.params?.userEmail) {
-      console.log("AlterarCadastro userEmail: " + route.params?.userEmail);
-
-      let api = axios.create({
-        baseURL: 'http://192.168.1.19:8080'
-      });
-    
-      let requestHeaders = {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
-          'Access-Control-Allow-Headers': 'Origin, Methods, Accept, Content-Type'
-        }
-      }
-    
-      api.get('/user/find/email?email=' + route.params?.userEmail, [requestHeaders])
-      .then(function (response) {
-        setvendedor(response.data.name);
-
-      }).catch(error => {
-        if (error.response) {
-          alert(error.response.data);
-          } else {
-          alert(error);
-          }
-      });
-    }
-  }, [route.params?.userEmail]); */
-
-
-
-
-
+  const [imgProd, setimgProd] = useState('');
 
 
   //===========CADASTRAR PRODUTO========================
 
 
   const handleSignClick = async () => {
-    if (InfAdicionais != ''  && marca != '' && descricao != '' && preco != '' && promo != '' && vendedor != '' && estoque != '' && titulo != '' ) {
+    if (InfAdicionais != '' && marca != '' && descricao != '' && preco != '' && promo != '' && vendedor != '' && estoque != '' && titulo != '' && imgProd != '') {
 
 
       axios('http://192.168.1.19:8080/product/create?category=FOOD', {
@@ -70,7 +34,7 @@ export default function CadastroInfAdicionais({route}) {
           'Content-Type': 'application/json'
         },
         data: JSON.stringify({
-                   
+
           'additionalInfo': InfAdicionais,
           'brand': marca,
           'description': descricao,
@@ -79,8 +43,8 @@ export default function CadastroInfAdicionais({route}) {
           'sellerName': vendedor,
           'stock': estoque,
           'title': titulo,
-          'imageUrl': "http://teste.jpg"
-            
+          'imageUrl': imgProd
+
         })
       })
         .then(function (response) {
@@ -92,11 +56,11 @@ export default function CadastroInfAdicionais({route}) {
 
         }).catch(error => {
           if (error.response) {
-          alert(error.response.data);
+            alert(error.response.data);
           } else {
-          alert(error);
+            alert(error);
           }
-          });
+        });
     } else {
       alert("Preencha os campos!");
     }
@@ -104,63 +68,65 @@ export default function CadastroInfAdicionais({route}) {
 
 
 
-     //===========PESQUISAR PRODUTO========================
+  //===========PESQUISAR PRODUTO========================
 
 
-     const handleSignClickPesquisar = async () => {
-      if (vendedor != '' && titulo != '' ) {
-  
-  
-        axios('http://192.168.1.19:8080/product/find/title/seller?sellerName='+vendedor+'&title='+titulo, {
-          method: 'GET',
-          headers: {
-            'Acpromot': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
-            'Access-Control-Allow-Headers': 'Origin, Methods, Acpromot, Content-Type'
-          },
-          data: JSON.stringify({
-            'additionalInfo': InfAdicionais,
-            'brand': marca,
-            'description': descricao,
-            'price': preco,
-            'pricePromotion': promo,
-            'sellerName': vendedor,
-            'stock': estoque,
-            'title': titulo,
-          })
-        }).then(function (response) {
-
-          setmarca(response.data.brand);
-          setdescricao(response.data.description);
-          setpreco(response.data.price.toString());
-          setpromo(response.data.pricePromotion.toString());
-          setestoque(response.data.stock.toString());
-          setInfAdicionais(response.data.additionalInfo);
+  const handleSignClickPesquisar = async () => {
+    if (vendedor != '' && titulo != '') {
 
 
-        }).catch(error => {
-          if (error.response) {
-            alert(error.response.data);
-          } else {
-            alert(error);
-          }
-        });
-      } else {
-        alert("Preencha os campos!");
-      }
+      axios('http://192.168.1.19:8080/product/find/title/seller?sellerName=' + vendedor + '&title=' + titulo, {
+        method: 'GET',
+        headers: {
+          'Acpromot': 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+          'Access-Control-Allow-Headers': 'Origin, Methods, Acpromot, Content-Type'
+        },
+        data: JSON.stringify({
+          'additionalInfo': InfAdicionais,
+          'brand': marca,
+          'description': descricao,
+          'price': preco,
+          'pricePromotion': promo,
+          'sellerName': vendedor,
+          'stock': estoque,
+          'title': titulo,
+          'imageUrl': imgProd
+        })
+      }).then(function (response) {
+
+        setmarca(response.data.brand);
+        setdescricao(response.data.description);
+        setpreco(response.data.price.toString());
+        setpromo(response.data.pricePromotion.toString());
+        setestoque(response.data.stock.toString());
+        setInfAdicionais(response.data.additionalInfo);
+        setimgProd(response.data.imageUrl);
+
+
+      }).catch(error => {
+        if (error.response) {
+          alert(error.response.data);
+        } else {
+          alert(error);
+        }
+      });
+    } else {
+      alert("Preencha os campos!");
     }
+  }
 
 
-   //===========ALTERAR PRODUTO========================
+  //===========ALTERAR PRODUTO========================
 
 
   const handleSignClickAlterar = async () => {
-    if (InfAdicionais != ''  && marca != ''  && preco != '' && promo != '' && vendedor != '' && estoque != '' && titulo != '' ) {
+    if (InfAdicionais != '' && marca != '' && preco != '' && promo != '' && vendedor != '' && estoque != '' && titulo != '') {
 
 
-      axios('http://192.168.1.19:8080/product/update?category=FOOD&sellerName='+vendedor+'&title='+titulo, {
+      axios('http://192.168.1.19:8080/product/update?category=FOOD&sellerName=' + vendedor + '&title=' + titulo, {
         method: 'PUT',
         headers: {
           'Acpromot': 'application/json',
@@ -178,14 +144,14 @@ export default function CadastroInfAdicionais({route}) {
           'sellerName': vendedor,
           'title': titulo,
           'stock': estoque,
-          'imageUrl': "http://teste.jpg"
+          'imageUrl': imgProd
         })
       }).then(function (response) {
         console.log(response);
-          alert(response.data);
-          navigation.reset({
-            routes: [{ name: 'TabsLogista' }]
-          });
+        alert(response.data);
+        navigation.reset({
+          routes: [{ name: 'TabsLogista' }]
+        });
       }).catch(error => {
         if (error.response) {
           alert(error.response.data);
@@ -200,41 +166,41 @@ export default function CadastroInfAdicionais({route}) {
 
 
 
-    //=========================EXCLUIR PRODUTO======================================
+  //=========================EXCLUIR PRODUTO======================================
 
 
-    const excluir = async () => {
-      if (titulo != '') {
-  
-  
-        axios('http://192.168.1.19:8080/product/delete?sellerName='+vendedor+'&title='+titulo, {
-          method: 'DELETE',
-          headers: {
-            'Acpromot': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
-            'Access-Control-Allow-Headers': 'Origin, Methods, Acpromot, Content-Type'
-          }
-        })
-          .then(function (response) {
-            console.log(response);
-            alert(response.data);
-            navigation.reset({
-              routes: [{ name: 'TabsLogista' }]
-            });
-  
-          }).catch(error => {
-            if (error.response) {
-              alert(error.response.data);
-            } else {
-              alert(error);
-            }
+  const excluir = async () => {
+    if (titulo != '') {
+
+
+      axios('http://192.168.1.19:8080/product/delete?sellerName=' + vendedor + '&title=' + titulo, {
+        method: 'DELETE',
+        headers: {
+          'Acpromot': 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+          'Access-Control-Allow-Headers': 'Origin, Methods, Acpromot, Content-Type'
+        }
+      })
+        .then(function (response) {
+          console.log(response);
+          alert(response.data);
+          navigation.reset({
+            routes: [{ name: 'TabsLogista' }]
           });
-      } else {
-        alert("Preencha o produto!");
-      }
+
+        }).catch(error => {
+          if (error.response) {
+            alert(error.response.data);
+          } else {
+            alert(error);
+          }
+        });
+    } else {
+      alert("Preencha o produto!");
     }
+  }
 
 
 
@@ -247,131 +213,141 @@ export default function CadastroInfAdicionais({route}) {
 
 
   return (
-<ScrollView>
-    <View style={styles.container}>
-      
-
-      <View style={styles.form}>
-
-      <TextInput
-          style={styles.imput}
-          placeholder="Titulo Produto"
-          placeholderTextColor="#999"
-          keyboardType="email-adress"
-          autoCapitalize="none"
-          value={titulo}
-          autoCorrect={false}
-          onChangeText={settitulo}
-        />
-
-        <TextInput
-          style={styles.imput}
-          placeholder="Marca"
-          placeholderTextColor="#999"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={marca}
-          autoCorrect={false}
-          onChangeText={setmarca}
-        />
-
-        <TextInput
-          style={styles.imput}
-          placeholder="Descricao"
-          placeholderTextColor="#999"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={descricao}
-          autoCorrect={false}
-          onChangeText={setdescricao}
-        />
+    <ScrollView>
+      <View style={styles.container}>
 
 
-        <TextInput
-          style={styles.imput}
-          placeholder="Preco"
-          placeholderTextColor="#999"
-          keyboardType="numeric"
-          autoCapitalize="none"
-          value={preco}
-          autoCorrect={false}
-          onChangeText={setpreco}
-        />
+        <View style={styles.form}>
 
-        <TextInput
-          style={styles.imput}
-          placeholder="Promo"
-          placeholderTextColor="#999"
-          keyboardType="numeric"
-          autoCapitalize="none"
-          value={promo}
-          autoCorrect={false}
-          onChangeText={setpromo}
-        />
+          <TextInput
+            style={styles.imput}
+            placeholder="Titulo Produto"
+            placeholderTextColor="#999"
+            keyboardType="default"
+            autoCapitalize="none"
+            value={titulo}
+            autoCorrect={false}
+            onChangeText={settitulo}
+          />
 
-        <TextInput
-          style={styles.imput}
-          placeholder="Estoque"
-          placeholderTextColor="#999"
-          keyboardType="numeric"
-          autoCapitalize="none"
-          value={estoque}
-          autoCorrect={false}
-          onChangeText={setestoque}
-        />
+          <TextInput
+            style={styles.imput}
+            placeholder="Marca"
+            placeholderTextColor="#999"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={marca}
+            autoCorrect={false}
+            onChangeText={setmarca}
+          />
 
-        <TextInput
-          style={styles.imput}
-          placeholder="Vendedor"
-          placeholderTextColor="#999"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={vendedor}
-          autoCorrect={false}
-          onChangeText={setvendedor}
-        />
+          <TextInput
+            style={styles.imput}
+            placeholder="Descricao"
+            placeholderTextColor="#999"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={descricao}
+            autoCorrect={false}
+            onChangeText={setdescricao}
+          />
 
 
+          <TextInput
+            style={styles.imput}
+            placeholder="Preco"
+            placeholderTextColor="#999"
+            keyboardType="numeric"
+            autoCapitalize="none"
+            value={preco}
+            autoCorrect={false}
+            onChangeText={setpreco}
+          />
 
-      <TextInput
-          style={styles.imput}
-          placeholder="Informações Adicionais"
-          placeholderTextColor="#999"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={InfAdicionais}
-          autoCorrect={false}
-          onChangeText={setInfAdicionais}
-        />
-        
+          <TextInput
+            style={styles.imput}
+            placeholder="Promo"
+            placeholderTextColor="#999"
+            keyboardType="numeric"
+            autoCapitalize="none"
+            value={promo}
+            autoCorrect={false}
+            onChangeText={setpromo}
+          />
+
+          <TextInput
+            style={styles.imput}
+            placeholder="Estoque"
+            placeholderTextColor="#999"
+            keyboardType="numeric"
+            autoCapitalize="none"
+            value={estoque}
+            autoCorrect={false}
+            onChangeText={setestoque}
+          />
+
+          <TextInput
+            style={styles.imput}
+            placeholder="Vendedor"
+            placeholderTextColor="#999"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={vendedor}
+            autoCorrect={false}
+            onChangeText={setvendedor}
+          />
 
 
 
-
-        <TouchableOpacity onPress={handleSignClick} style={styles.button}>
-          <Text style={styles.buttontext}> Cadastrar produto</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleSignClickPesquisar} style={styles.button}>
-          <Text style={styles.buttontext}> Consultar produto</Text>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity onPress={handleSignClickAlterar} style={styles.button}>
-          <Text style={styles.buttontext}> Alterar produto</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={excluir} style={styles.buttonsair}>
-          <Text style={styles.buttontext}> Excluir Produto</Text>
-        </TouchableOpacity>
+          <TextInput
+            style={styles.imput}
+            placeholder="Informações Adicionais"
+            placeholderTextColor="#999"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={InfAdicionais}
+            autoCorrect={false}
+            onChangeText={setInfAdicionais}
+          />
+          <TextInput
+            style={styles.imput}
+            placeholder="Imagem Produto"
+            placeholderTextColor="#999"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={imgProd}
+            autoCorrect={false}
+            onChangeText={setimgProd}
+          />
 
 
 
 
-        <StatusBar style="auto" />
+
+          <TouchableOpacity onPress={handleSignClick} style={styles.button}>
+            <Text style={styles.buttontext}> Cadastrar produto</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={handleSignClickPesquisar} style={styles.button}>
+            <Text style={styles.buttontext}> Consultar produto</Text>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity onPress={handleSignClickAlterar} style={styles.button}>
+            <Text style={styles.buttontext}> Alterar produto</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={excluir} style={styles.buttonsair}>
+            <Text style={styles.buttontext}> Excluir Produto</Text>
+          </TouchableOpacity>
+
+
+
+
+          <StatusBar style="auto" />
+        </View>
+
       </View>
-      
-    </View>
     </ScrollView>
   );
 }

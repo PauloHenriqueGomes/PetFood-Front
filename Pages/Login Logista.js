@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import logo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoPet.png';
 
+
 export default function LoginLogista() {
 
   const navigation = useNavigation();
@@ -88,6 +89,7 @@ export default function LoginLogista() {
           autoCorrect={false}
           value={email}
           onChangeText={setEmail}
+          
         />
 
         <TextInput

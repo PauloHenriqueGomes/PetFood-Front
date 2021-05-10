@@ -16,41 +16,40 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
 
-
-export default function Busca({route}) {
+export default function ProdutosLoja({ route }) {
   const [searchText, setSearchText] = useState('');
   const [users, setUsers] = useState([]);
   const [resultado, setResultado] = useState([]);
   const navigation = useNavigation();
   const [produto, setproduto] = useState('');
-  const [nome, setNome] = useState('');
 
 
-    const Buscar = async () => {
-   
 
-      axios.get('http://192.168.1.19:8080/search/seller?isWeek=true&localTime=12%3A00&productTitle='+users)
-      .then(resp =>{
+  useEffect(() => {
+
+
+    axios.get('http://192.168.1.19:8080/search/seller/products?sellerName=' + route.params?.name)
+      .then(resp => {
         console.log(resp.data)
-      /* this.setState({Resultado:resp.data}) */
-      setResultado(resp.data)
+        /* this.setState({Resultado:resp.data}) */
+        setResultado(resp.data)
       }).catch(error => {
         if (error.response) {
-        alert(error.response.data);
+          alert(error.response.data);
         } else {
-        alert(error);
+          alert(error);
         }
-        });
-    };
+      });
+  });
 
   return (
 
     <ScrollView>
-     <View style={styles.container}> 
-    <View style={styles.form}>  
-    <View style={styles.imputView}>
-      
-    <TextInput
+      <View style={styles.container}>
+        <View style={styles.form}>
+          <View style={styles.imputView}>
+
+            <TextInput
               defaultValue={searchText}
               style={styles.imput}
               placeholder='Procurar produto'
@@ -58,24 +57,27 @@ export default function Busca({route}) {
               value={users}
               onChangeText={setUsers}
             />
-    <TouchableOpacity onPress={Buscar}> 
-     <Icon name='search' size={24} color='#333'/>
-    </TouchableOpacity>
-    </View>
 
-    {resultado.map(resp => 
-    <TouchableOpacity onPress={() => navigation.navigate('Produtos Loja', { name:resp.name, user:nome})}  style={styles.bannerlojas}>
-      <Image style={styles.ImageLoja}
-      source={{ uri: resp.imageUrl }} 
-      />
-      <Text>  {resp.name}
-      </Text>
-      </TouchableOpacity>)}
+          </View>
 
-    </View>
-    </View>
+          {resultado.map(resp =>
+            <TouchableOpacity onPress={() => navigation.navigate('Carrinho', { title: resp.title, price: resp.price, sellername: route.params?.name, user: route.params?.nome, imgprod: resp.imageUrl })} style={styles.bannerlojas}>
+              <Image style={styles.ImageLoja}
+                source={{ uri: resp.imageUrl }}
+              />
+              <Text style={styles.text}>
+                {resp.title}
+                {resp.description}
+      R$:{resp.price}
+              </Text>
+            </TouchableOpacity>)}
+
+        </View>
+      </View>
 
     </ScrollView>
+
+
 
   );
 }
@@ -117,7 +119,17 @@ const styles = StyleSheet.create({
 
   },
 
-  bannercategoria:{
+  text: {
+    flex: 1,
+    color: 'black',
+    fontSize: 20,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+
+  },
+
+  bannercategoria: {
     backgroundColor: 'white',
     borderColor: '#d9d9d9',
     borderWidth: 1,
@@ -129,7 +141,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    
+
   },
 
   buttoncadastro: {
@@ -153,14 +165,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
-  ImageLoja:{
+  ImageLoja: {
 
     width: 50,
     height: 50,
     borderRadius: 100 / 2,
     //borderRadius: 4,
     //marginBottom: 12,
-    
+
 
   },
 
@@ -178,7 +190,7 @@ const styles = StyleSheet.create({
   },
 
 
-  
+
   userCard: {
     backgroundColor: '#fafafa',
     paddingVertical: 6,
@@ -218,6 +230,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    
+
   },
 });

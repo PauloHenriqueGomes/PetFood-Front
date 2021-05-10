@@ -264,7 +264,7 @@ export default function AlterarCadastro({route}) {
           style={styles.input}
           placeholder="Cidade"
           placeholderTextColor="#999"
-          keyboardType="email-adress"
+          keyboardType="default"
           autoCapitalize="none"
           value={cidade}
           autoCorrect={false}
@@ -278,7 +278,7 @@ export default function AlterarCadastro({route}) {
           style={styles.input}
           placeholder="UF"
           placeholderTextColor="#999"
-          keyboardType="email-adress"
+          keyboardType="default"
           autoCapitalize="none"
           value={uf}
           autoCorrect={false}

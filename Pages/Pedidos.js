@@ -19,7 +19,7 @@ export default function Pedidos() {
   
   const handleSignClick = async () => {
     
-    axios('http://192.168.1.19:8080/request/update/status?id=608896c582ccb071c23f0d16&status=CANCELED', {
+    axios('http://192.168.1.19:8080/request/update/status?id=6089ef1f35904f01460f4354&status=CANCELED', {
       method: 'PATCH',
 
     })

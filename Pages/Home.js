@@ -1,8 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, FlatList, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import logo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoPet.png';
 import logoCobasi from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/Cobasi.png';
 import logoPetz from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/Petz.png';
 import logoRacaoForte from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/RacaoForte.png';
@@ -13,29 +11,34 @@ import logoTudoAnimal from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front
 import logoRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoRaca.png';
 import logoBrinquedo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoBrinquedo.png';
 import logoRemedio from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoRemedio.png';
+import axios from 'axios';
 
 export default function Home() {
 
+    const navigation = useNavigation();
+
+   //========================BUSCA CATEGORIAS=========================// 
+
+  const BuscaComida = async () => {
+   
+
+      axios.get('http://192.168.1.19:8080/search/seller/category?category=FOOD&isWeek=true&localTime=15%3A00')
+      .then(res=>{
+          console.log(res.data)})
+
+    };
+  //======================== TELA  =========================// 
 
 
-  const navigation = useNavigation();
-
-
-
-  //render() {
   return (
     <ScrollView>
       <View style={styles.container}>
-
-
-
-
         <View style={styles.form}>
 
           <Text style={styles.LojaDest}>Principais categorias</Text>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannercategoria}>
+          <TouchableOpacity onPress={BuscaComida} style={styles.bannercategoria}>
           <Image source={logoRacao} style={styles.ImageLoja} />
            <Text style={styles.buttontext}> Alimentos</Text>
           </TouchableOpacity>
@@ -52,11 +55,17 @@ export default function Home() {
 
           </ScrollView>
 
+          <TextInput
+            style={styles.imput}
+            
+            placeholder="Digite o produto"
+            placeholderTextColor="#999"
+            keyboardType="default"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
 
-
-
-          <Text style={styles.LojaDest}>Lojas em destaque</Text>
-
+        
           <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={styles.bannerlojas}>
           <Image source={logoPetz} style={styles.ImageLoja} />          
             <Text style={styles.buttontext}> Pets</Text>
@@ -104,17 +113,9 @@ export default function Home() {
           <Text style={styles.buttontext}> Tudo Animal</Text>
             <Text style={styles.buttontext2}> Av Paulista 470 - Jadim Paulista</Text>
           </TouchableOpacity>
-
-
         </View>
-
-
-
-
       </View>
     </ScrollView>
-
-
   );
 }
 
@@ -160,34 +161,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 100 / 2,
-    //borderRadius: 4,
-    //marginBottom: 12,
-    
-
   },
-
-  ImageLoja:{
-
-    width: 50,
-    height: 50,
-    borderRadius: 100 / 2,
-    //borderRadius: 4,
-    //marginBottom: 12,
-    
-
-  },
-
-  xbannerlojas: {
-    height: 65,
-    borderColor: '#ddd',
-    backgroundColor: '#b7d5ac',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
-    marginTop: 20,
-    marginBottom: 1,
-  },
-
 
   form: {
     alignSelf: 'stretch',
@@ -216,10 +190,7 @@ const styles = StyleSheet.create({
   buttontext2: {
     color: 'black',
     fontSize: 15,
- 
   },
-
-
 
   imput: {
     borderWidth: 1,
@@ -228,18 +199,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#444',
     height: 44,
-    marginTop: 50,
-    marginBottom: 30,
+    marginTop: 30,
+    marginBottom: 15,
     borderRadius: 8,
   },
 
-
-  NovaConta: {
-    fontSize: 12,
-    alignItems: 'center',
-    color: '#999',
-
-  },
 
   textotelainicial: {
     color: 'black',
@@ -254,37 +218,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-
-
-  lista: {
-    height: 500,
-    alignSelf: 'stretch',
-    //paddingHorizontal: 30,  
-    //marginTop: 5,
-
-    //borderWidth:1,
-    //borderColor: '#ddd',
-    //backgroundColor: 'black',
-    fontSize: 16,
-    marginTop: 20,
-
-    //color:'#444',
-    //height: 44,
-    //borderRadius:8, 
-
-  },
-
-  cardView: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    paddingHorizontal: 30,
-    fontSize: 16,
-    color: '#444',
-    height: 54,
-    marginTop: 1,
-    marginBottom: 5,
-    borderRadius: 8,
-  },
 
 });
 
