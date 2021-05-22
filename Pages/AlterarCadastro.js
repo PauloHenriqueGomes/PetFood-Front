@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView,KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -21,7 +21,7 @@ export default function AlterarCadastro({route}) {
   const [cidade, setCidade] = useState('');
   const [uf, setUf] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (route.params?.userEmail) {
       console.log("AlterarCadastro userEmail: " + route.params?.userEmail);
 
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   form: {
     alignSelf: 'stretch',
     paddingHorizontal: 30,
-    marginTop: 30,
+    marginTop: 50,
   },
 
   button: {

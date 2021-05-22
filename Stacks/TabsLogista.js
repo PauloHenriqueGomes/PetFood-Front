@@ -13,6 +13,8 @@ import AlterarLogista from '../Pages/AlterarLogista';
 import Pedidos from '../Pages/Pedidos';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CadastroProduto from '../Pages/CadastroProduto';
+import EstoqueLojista from '../Pages/EstoqueLojista';
+import PedidosLoja from '../Pages/PedidosLoja';
 
 
 
@@ -28,6 +30,8 @@ export default function TabsLogista({route}) {
 
     <Tab.Navigator activcolor='#d3d3d3'>
 
+
+
       <Tab.Screen name="Produtos"component={CadastroProduto} 
       options={{
         tabBarIcon:({focused})=>
@@ -35,7 +39,14 @@ export default function TabsLogista({route}) {
         }}
       />
 
-      <Tab.Screen name="Pedidos" component={Pedidos} 
+     <Tab.Screen name="EstoqueLojista" component={EstoqueLojista} initialParams={{sellerEmail: route.params?.email}}
+      options={{
+        tabBarIcon:({focused})=>
+        (<Icon  name="clipboard"color ={'#808080'} size={28}/>),
+        }}
+        />
+
+      <Tab.Screen name="PedidosLoja" component={PedidosLoja} initialParams={{sellerEmail: route.params?.email}}
       options={{
         tabBarIcon:({focused})=>
         (<Icon  name="clipboard"color ={'#808080'} size={28}/>),
@@ -47,6 +58,7 @@ export default function TabsLogista({route}) {
         (<Icon  name="user"color ={'#808080'} size={28}/>),
         }}
         />
+
 
     </Tab.Navigator>
 

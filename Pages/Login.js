@@ -41,10 +41,14 @@ export default function Login() {
         .then(function (response) {
           console.log(response);
           alert(response.data);
+
           navigation.reset({
             routes: [{ name: 'Tabs', params: { email } }],
-
-          });
+              });
+/*               navigation.reset ({
+                routes: [{ name: 'Carrinho', params: { email } }],
+                  });  */
+ 
 
         }).catch(error => {
           if (error.response) {

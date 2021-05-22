@@ -20,7 +20,7 @@ import ProdutosLoja from '../Pages/ProdutosLoja';
 const Stack = createStackNavigator();
 
 
-export default function Stacks() {
+export default function Stacks({route}) {
 
   return (
 
@@ -33,11 +33,11 @@ export default function Stacks() {
       <Stack.Screen options={{ headerShown: false }} name="LoginLogista" component={LoginLogista}/>
       <Stack.Screen name="Cadastro" component={Cadastro} />
       <Stack.Screen name="Cadastro Lojista" component={CadastroLogista} />
-      <Stack.Screen name="Carrinho" component={Carrinho} />
+      <Stack.Screen  name="Carrinho" component={Carrinho}    />
       <Stack.Screen name="Produtos Loja" component={ProdutosLoja} />
-      <Stack.Screen options={{ headerShown: false }} name="Tabs" component={Tabs}/>
-      <Stack.Screen options={{ headerShown: false }} name="TabsLogista" component={TabsLogista}
-      />
+      <Stack.Screen options={{ headerShown: false }} name="Tabs" component={Tabs}  />
+      <Stack.Screen options={{ headerShown: false }} name="TabsLogista" component={TabsLogista}/>
+
 
     </Stack.Navigator>
 

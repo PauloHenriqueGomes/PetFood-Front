@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -26,7 +26,7 @@ export default function AlterarLogista({ route }) {
   const [FInic, setFInic] = useState('');
   const [FFim, setFFim] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (route.params?.sellerEmail) {
       console.log("AlterarLojista sellerEmail: " + route.params?.sellerEmail);
 

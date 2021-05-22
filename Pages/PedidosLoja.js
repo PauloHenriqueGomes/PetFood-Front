@@ -10,60 +10,72 @@ import {
   TextInput,CheckBox
 } from 'react-native';
 import axios from 'axios';
-import {  useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 
-export default function Pedidos({route}) {
+export default function PedidosLoja({route}) {
   const navigation = useNavigation();
 
-  const[ListaPedidos,setListaPedidos] = useState([]);
+  const[Pedidos,setListaPedidos] = useState([]);
   const[NumPedido,setNumPedido] = useState(false);
   const [nome, setNome] = useState('');
 
 
- useEffect(() => {
+
+  React.useEffect(() => {
   
-    axios.get('http://192.168.1.19:8080/user/find/email?email=' + route.params?.userEmail)
+    axios.get('http://192.168.1.19:8080//seller/find/email?email=' + route.params?.sellerEmail)
     .then(respt => {
 
     setNome(respt.data.name)
-     /* console.log(respt.data.name) ; */
+    /* console.log(respt.data.name) */;
 })
-  } ); 
+  } );
 
+  useEffect(() => {
+    axios.get('http://192.168.1.19:8080/request/find/seller?sellerName='+nome)
+    .then(resp => {
 
-useEffect(() => {
-  axios.get('http://192.168.1.19:8080/request/find/user?userName=' +nome )
-  .then(resp => {
-
-    setListaPedidos(resp.data)
-    /* console.log(resp.data) */;
-})
+      setListaPedidos(resp.data)
+      /* console.log(resp.data); */
+  })
 });
 
-
-
   
-  const handleSignClick = async () => {
+const handleSignClick = async () => {
     
-    axios('http://192.168.1.19:8080/request/update/status?id='+NumPedido+'&status=CANCELED', {
-      method: 'PATCH',
+  axios('http://192.168.1.19:8080/request/update/status?id='+NumPedido+'&status=PROCESSED', {
+    method: 'PATCH',
 
-    })
-      .then(function (response) {
-        console.log(response);
-        alert(response.data);
- /*        navigation.reset({
-          routes: [{ name: 'Pedidos' }] 
-        });*/
+  })
+    .then(function (response) {
+      alert(response.data);
+    }).catch(error => {
+      if (error.response) {
+      alert(error.response.data);
+      } else {
+      alert(error);
+      }
+      });
 
-      }).catch(error => {
-        if (error.response) {
-        alert(error.response.data);
-        } else {
-        alert(error);
-        }
-        });
+}
+
+const handleSignClick2 = async () => {
+    
+  axios('http://192.168.1.19:8080/request/update/status?id='+NumPedido+'&status=DELIVERED', {
+    method: 'PATCH',
+
+  })
+    .then(function (response) {
+      alert(response.data);
+
+    }).catch(error => {
+      if (error.response) {
+      alert(error.response.data);
+      } else {
+      alert(error);
+      }
+      });
 
 }
 
@@ -79,28 +91,33 @@ useEffect(() => {
         <View style={styles.form}>
 
 
-          <Text style={styles.LojaDest}>Seus pedidos</Text>
-          {/* <Text> {NumPedido}</Text> */}
-         
-          {ListaPedidos.map(resp =>
+          <Text style={styles.LojaDest}>Suas vendas</Text>
+          
+          {Pedidos.map(resp =>
           <View  style={styles.bannerlojas}>          
-            <Text style={styles.buttontext}> {resp.sellerName}</Text>
+            <Text style={styles.buttontext}> {resp.userName}</Text>
             <Text style={styles.buttontext2}> Pedido: {resp.id}</Text>
+            <Text style={styles.buttontext2}> Produto: {resp.title} Qtd: {resp.totalQuantity} </Text>
             <Text style={styles.buttontext2}> Preço: {resp.totalPrice}  Status Pedido: {resp.status}</Text>
+            
             <CheckBox              
             value={NumPedido}
              onValueChange={()=> setNumPedido(resp.id)} 
-            style={styles.checkbox}   
-            /* onPress={()=> setNumPedido(resp.id)}  */    />
+            style={styles.checkbox}   />
+
            </View>
           )}
                     
               <TouchableOpacity  onPress={handleSignClick}  style={styles.checkoutButton}>
                 <Text style={styles.checkoutButtonText}>
-                  Cancelar pedido
+                  Processar pedido
                 </Text>
               </TouchableOpacity>
-
+              <TouchableOpacity  onPress={handleSignClick2}  style={styles.checkoutButton}>
+                <Text style={styles.checkoutButtonText}>
+                  Entregue
+                </Text>
+              </TouchableOpacity>
           
 
         </View>
@@ -116,9 +133,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
   },
-/*   checkbox: {
-    alignSelf: "center",
-  }, */
 
   bannercategoria:{
     backgroundColor: 'white',

@@ -14,14 +14,13 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import logoCasaRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/CasaRacao.png';
-import logoReiAquario from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/ReiAquario.png';
 
 
 export default function Carrinho({ route }) {
 
 
   const navigation = useNavigation();
+  
 
 
 
@@ -33,7 +32,7 @@ export default function Carrinho({ route }) {
       img: route.params?.imgprod,
       quantity: 1,
       price: route.params?.price,
-      perPrice: 30,
+      perPrice: route.params?.price,
     },
     /*     {
           id: 'PID000106',
@@ -47,6 +46,21 @@ export default function Carrinho({ route }) {
         }, */
   ]);
   const [shippingMethod, setShippingMethod] = useState('Normal');
+
+  const [nome, setNome] = useState('');
+  const [num,setnum]= useState(1);      
+  
+  
+  useEffect(() => {
+  
+    axios.get('http://192.168.1.19:8080/user/find/email?email=' + route.params?.userEmail)
+    .then(respt => {
+
+    setNome(respt.data.name)
+    console.log(respt.data.name)
+    /* console.log(respt.data.name) */;
+})
+  } );
 
 
 
@@ -65,20 +79,21 @@ export default function Carrinho({ route }) {
       data: JSON.stringify({
         'products': [{
 
-          'quantity': 2,
+          'quantity': num,
           'title': route.params?.title,
         }],
         'sellerName': route.params?.sellername,
-        'shippingPrice': route.params?.price,
-        'userName': 'Lucas',
+        'shippingPrice': 0,
+        'userName': route.params?.userc,
       })
     })
       .then(function (response) {
         console.log(response);
         alert(response.data);
-        navigation.reset({
-          routes: [{ name: 'Pedidos' }]
-        });
+/*         navigation.reset({
+          routes: [{ name: 'Home'}], 
+
+        });*/
 
       }).catch(error => {
         if (error.response) {
@@ -90,6 +105,7 @@ export default function Carrinho({ route }) {
 
   }
 
+  
 
   //============================================================
 
@@ -102,6 +118,9 @@ export default function Carrinho({ route }) {
           <View style={styles.cartTitleView}>
             <Icon name='shopping-cart' type='font-awesome-5' />
             <Text style={styles.cartTitle}>Carrinho</Text>
+            
+            <Text style={styles.cartTitle}>{route.params?.email}{nome}</Text>
+            <Text style={styles.cartTitle}></Text>
           </View>
 
           {cart.length > 0 ? (
@@ -128,7 +147,9 @@ export default function Carrinho({ route }) {
                       >{`R$ ${product.price}`}</Text>
                       <View style={styles.productItemCounterView}>
                         <TouchableOpacity
-                          onPress={() => {
+                          onPress={() => {                           
+                            
+                            
                             if (product.quantity === 1) {
                               return Alert.alert(
                                 `Remover ${product.name}?`,
@@ -146,8 +167,8 @@ export default function Carrinho({ route }) {
                                   },
                                 ]
                               );
-                            }
-                            const newProd = {
+                            }  
+                             const newProd = {
                               ...product,
                               quantity: product.quantity - 1,
                               price: product.price - product.perPrice,
@@ -156,6 +177,9 @@ export default function Carrinho({ route }) {
                               (p) => p.id !== product.id
                             );
                             setCart([...restProds, newProd]);
+                            setnum(newProd.quantity)
+                              
+
                           }}
                         >
                           <Icon
@@ -178,9 +202,10 @@ export default function Carrinho({ route }) {
                               (p) => p.id !== product.id
                             );
                             setCart([...restProds, newProd]);
+                            setnum(newProd.quantity)
                           }}
                         >
-                          <Icon
+                          <Icon 
                             style={styles.toggleCounterButton}
                             name='plus-circle'
                             type='font-awesome'
@@ -194,7 +219,7 @@ export default function Carrinho({ route }) {
 
 
               <View style={styles.totalView}>
-                <Text style={styles.totalText}>Total -</Text>
+                <Text style={styles.totalText}>Total - </Text>
                 {shippingMethod === 'Normal' ? (
                   <Text style={styles.totalPrice}>
                     R$ {cart.reduce((acc, val) => val.price + acc, 0)}
@@ -205,7 +230,7 @@ export default function Carrinho({ route }) {
                   </Text>
                 )}
               </View>
-              <TouchableOpacity onPress={handleSignClick} style={styles.checkoutButton}>
+              <TouchableOpacity onPress={handleSignClick } style={styles.checkoutButton}>
                 <Text style={styles.checkoutButtonText}>
                   Finalizar Compra
                 </Text>
@@ -217,7 +242,11 @@ export default function Carrinho({ route }) {
             </View>
           )}
 
+
+         
           <View style={{ height: 100 }}></View>
+          
+
         </ScrollView>
       </View>
     </View>

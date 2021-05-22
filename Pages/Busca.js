@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  StatusBar,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  SafeAreaView,
-  Alert,
-} from 'react-native';
+import {  StyleSheet,  Text,View, TextInput, StatusBar, TouchableOpacity, Image,ScrollView, SafeAreaView, Alert,} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
+import logoRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoRaca.png';
+import logoBrinquedo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoBrinquedo.png';
+import logoRemedio from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoRemedio.png';
 
 
 export default function Busca({route}) {
@@ -22,25 +14,36 @@ export default function Busca({route}) {
   const [users, setUsers] = useState([]);
   const [resultado, setResultado] = useState([]);
   const navigation = useNavigation();
-  const [produto, setproduto] = useState('');
   const [nome, setNome] = useState('');
 
 
-    const Buscar = async () => {
+  useEffect(() => {
+  
+    axios.get('http://192.168.1.19:8080/user/find/email?email=' + route.params?.userEmail)
+    .then(respt => {
+
+    setNome(respt.data.name)
+     /* console.log(respt.data.name) ; */
+})
+  } ); 
+
+
+     const Buscar = async () => 
+    /*useEffect(() =>*/ {
    
 
       axios.get('http://192.168.1.19:8080/search/seller?isWeek=true&localTime=12%3A00&productTitle='+users)
       .then(resp =>{
-        console.log(resp.data)
-      /* this.setState({Resultado:resp.data}) */
+
       setResultado(resp.data)
       }).catch(error => {
-        if (error.response) {
-        alert(error.response.data);
-        } else {
-        alert(error);
-        }
-        });
+        if (error.response) { 
+       alert(error.response.data);
+       }  else {
+       alert(error);
+       } 
+       });
+
     };
 
   return (
@@ -51,26 +54,48 @@ export default function Busca({route}) {
     <View style={styles.imputView}>
       
     <TextInput
-              defaultValue={searchText}
+              /* defaultValue={searchText} */
               style={styles.imput}
               placeholder='Procurar produto'
               textContentType='name'
-              value={users}
+              /* value={users} */
               onChangeText={setUsers}
             />
-    <TouchableOpacity onPress={Buscar}> 
+    <TouchableOpacity  onPress={Buscar} > 
      <Icon name='search' size={24} color='#333'/>
     </TouchableOpacity>
     </View>
 
     {resultado.map(resp => 
-    <TouchableOpacity onPress={() => navigation.navigate('Produtos Loja', { name:resp.name, user:nome})}  style={styles.bannerlojas}>
+    <TouchableOpacity onPress={() => navigation.navigate('Produtos Loja' , { name:resp.name, user:nome} )}  style={styles.bannerlojas}>
       <Image style={styles.ImageLoja}
       source={{ uri: resp.imageUrl }} 
       />
-      <Text>  {resp.name}
-      </Text>
+      <View style={styles.textdesc}>
+      <Text > {resp.name}</Text>
+      <Text >{resp.registrationInfos.address}</Text>
+      
+      </View>
       </TouchableOpacity>)}
+      <Text style={styles.LojaDest}>Principais categorias</Text>
+
+      <TouchableOpacity  style={styles.bannercategoria}>
+          <Image source={logoRacao} style={styles.ImageLoja} />
+           <Text style={styles.buttontext}> Alimentos</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity  style={styles.bannercategoria}>
+          <Image source={logoBrinquedo} style={styles.ImageLoja} />
+          <Text style={styles.buttontext}> Brinquedos</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity  style={styles.bannercategoria}>
+          <Image source={logoRemedio} style={styles.ImageLoja} />
+            <Text style={styles.buttontext}> Remedios</Text>
+          </TouchableOpacity>
+
+
+
 
     </View>
     </View>
@@ -87,11 +112,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
   },
+
+
+  textdesc :{
+     alignItems: 'stretch', // Centered horizontally
+    flex:1
+ },
   searchView: {
     display: 'flex',
     flexDirection: 'row',
 
   },
+
+  LojaDest: {
+    color: 'black',
+    fontSize: 20,
+    alignSelf: 'stretch',
+    paddingHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 10,
+  },
+
   inputView: {
     flex: 1,
     height: 40,
@@ -118,7 +159,7 @@ const styles = StyleSheet.create({
   },
 
   bannercategoria:{
-    backgroundColor: 'white',
+    backgroundColor: '#DFDEDA',
     borderColor: '#d9d9d9',
     borderWidth: 1,
     borderBottomWidth: 3,
@@ -144,7 +185,7 @@ const styles = StyleSheet.create({
   form: {
     alignSelf: 'stretch',
     paddingHorizontal: 30,
-    marginTop: 10,
+    marginTop: 50,
   },
 
   input: {

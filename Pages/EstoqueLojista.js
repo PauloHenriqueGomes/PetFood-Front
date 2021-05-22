@@ -16,27 +16,38 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
 
-export default function ProdutosLoja({ route }) {
+export default function EstoqueLojista({ route }) {
   const [searchText, setSearchText] = useState('');
   const [users, setUsers] = useState([]);
   const [resultado, setResultado] = useState([]);
   const navigation = useNavigation();
   const [produto, setproduto] = useState('');
+  const [nome, setNome] = useState('');
 
+
+  React.useEffect(() => {
+  
+    axios.get('http://192.168.1.19:8080//seller/find/email?email=' + route.params?.sellerEmail)
+    .then(respt => {
+
+    setNome(respt.data.name)
+    /* console.log(respt.data.name) */;
+})
+  } );
 
 
   useEffect(() => {
 
 
-    axios.get('http://192.168.1.19:8080/search/seller/products?sellerName=' + route.params?.name)
+    axios.get('http://192.168.1.19:8080/search/seller/products?sellerName='+nome )
       .then(resp => {
 
         setResultado(resp.data)
-      }).catch(error => {
+      })/* .catch(error => {
         if (error.response) {
           alert(error.response.data);
         } 
-      });
+      }) */;
   });
 
   return (
@@ -58,17 +69,17 @@ export default function ProdutosLoja({ route }) {
           </View> */}
 
           {resultado.map(resp =>
-            <TouchableOpacity onPress={() => navigation.navigate('Carrinho', { title: resp.title, price: resp.price, sellername: route.params?.name, user: route.params?.nome, imgprod: resp.imageUrl, userc:route.params?.user })} style={styles.bannerlojas}>
+            <TouchableOpacity  style={styles.bannerlojas}>
               <Image style={styles.ImageLoja}
                 source={{ uri: resp.imageUrl }}
               />
 
             <View style={styles.textdesc}>
               <Text > {resp.title}</Text>
+              <Text> Estoque: {resp.stock}</Text>
               <Text> R$:{resp.price}</Text>
             </View>  
             </TouchableOpacity>)}
-            
 
         </View>
       </View>
@@ -159,7 +170,7 @@ const styles = StyleSheet.create({
   form: {
     alignSelf: 'stretch',
     paddingHorizontal: 30,
-    marginTop: 10,
+    marginTop: 70,
   },
 
   input: {
