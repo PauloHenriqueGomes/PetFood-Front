@@ -28,7 +28,7 @@ export default function ProdutosLoja({ route }) {
   useEffect(() => {
 
 
-    axios.get('http://192.168.1.19:8080/search/seller/products?sellerName=' + route.params?.name)
+    axios.get('http://192.168.1.19:8080/search/seller/products?page=0&size=100&sellerName=' + route.params?.name)
       .then(resp => {
 
         setResultado(resp.data)

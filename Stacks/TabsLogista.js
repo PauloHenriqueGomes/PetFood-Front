@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState, useEffect }from 'react';
 import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import axios from 'axios';
 import Login from '../Pages/Login';
 import Cadastro from '../Pages/Cadastro';
 import Home from '../Pages/Home';
@@ -23,6 +23,19 @@ const myIcon = <Icon name="rocket" size={30} color="#900" />;
 
 export default function TabsLogista({route}) {
 
+/*   const [nome, setNome] = useState('');
+
+  useEffect(() => {
+  
+    axios.get('http://192.168.1.19:8080//seller/find/email?email=' + route.params?.email)
+    .then(respt => {
+
+    setNome(respt.data.name)
+     console.log(respt.data.name) ;
+})
+  } ); */
+  
+
 
   return (
 
@@ -32,7 +45,7 @@ export default function TabsLogista({route}) {
 
 
 
-      <Tab.Screen name="Produtos"component={CadastroProduto} 
+      <Tab.Screen name="Produtos"component={CadastroProduto} initialParams={{sellerEmail: route.params?.email}}
       options={{
         tabBarIcon:({focused})=>
         (<Icon  name="home"color ={'#808080'} size={28}/>),
@@ -60,6 +73,7 @@ export default function TabsLogista({route}) {
         />
 
 
+        
     </Tab.Navigator>
 
   );

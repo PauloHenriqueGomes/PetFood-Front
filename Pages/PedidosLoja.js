@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { Title } from 'react-native-paper';
 
 
 export default function PedidosLoja({route}) {

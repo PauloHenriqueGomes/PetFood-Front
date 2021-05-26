@@ -90,7 +90,7 @@ export default function AlterarCadastro({route}) {
           'uf': uf
         })
       }).then(function (response) {
-        console.log(response);
+        /* console.log(response); */
           alert(response.data);
           navigation.reset({
             routes: [{ name: 'Login' }]

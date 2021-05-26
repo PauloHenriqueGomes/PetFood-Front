@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, ScrollView } from 'react-native';
+import { StyleSheet, Text,CheckBox, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,6 +21,14 @@ export default function Cadastro() {
   const [cidade, setCidade] = useState('');
   const [uf, setUf] = useState('');
 
+  const [regiao, setregiao] = useState(false);
+
+  const regiao1 = useState(false);
+
+
+  
+
+
 
 
 
@@ -31,7 +39,7 @@ export default function Cadastro() {
     if (nome != '' && email.includes('@') && senha != '' && cpf.length > 10 && celular.length > 10 && cep.length > 7 && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://192.168.1.19:8080/user/create?cityZone=EAST', {
+      axios('http://192.168.1.19:8080/user/create?cityZone='+regiao, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -54,7 +62,7 @@ export default function Cadastro() {
         })
       })
         .then(function (response) {
-          console.log(response);
+          /* console.log(response); */
           alert(response.data);
           navigation.reset({
             routes: [{ name: 'Login' }]
@@ -200,6 +208,58 @@ export default function Cadastro() {
           onChangeText={setUf}
         />
 
+
+<Text style={styles.Desc}>Sua região</Text>
+
+<View style={styles.rows}>
+  
+ 
+    <CheckBox
+        value={regiao} 
+      onValueChange={() => setregiao('NORTH')}
+      style={styles.checkbox}
+      />
+    <Text style={styles.Desc}>NORTE</Text>
+     <CheckBox
+      value={regiao} 
+      onValueChange={() => setregiao('SOUTH')}
+      style={styles.checkbox}
+     />
+    <Text style={styles.Desc}>SUL</Text>
+
+    <CheckBox
+      value={regiao} 
+      onValueChange={() => setregiao('EAST')}
+      style={styles.checkbox}
+      />
+      
+    <Text style={styles.Desc}>LESTE</Text>
+
+    </View>
+
+    <View style={styles.rows}>
+    
+    <CheckBox
+    value={regiao} 
+      onValueChange={() => setregiao('WEST')}
+      style={styles.checkbox}
+       />
+    <Text style={styles.Desc}>OESTE</Text>
+
+
+    <CheckBox
+    value={regiao} 
+      onValueChange={() => setregiao('CENTER')}
+      style={styles.checkbox}
+      />
+    <Text style={styles.Desc}>CENTRO</Text>
+ 
+  
+</View>
+
+
+        
+
         <TouchableOpacity onPress={handleSignClick} style={styles.button}>
           <Text style={styles.buttontext}> Cadastrar</Text>
         </TouchableOpacity>
@@ -246,7 +306,11 @@ const styles = StyleSheet.create({
   buttontext: {
     color: 'white'
   },
-
+  rows: {
+    marginBottom: 15,
+    flexDirection: "row",
+ 
+  },
 
 
   imput: {
@@ -258,6 +322,14 @@ const styles = StyleSheet.create({
     height: 44,
     marginTop: 20,
     borderRadius: 8,
+  },
+  Desc: {
+    color: 'black',
+    fontSize: 20,
+    alignSelf: 'stretch',
+    paddingHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 5,
   },
 
 

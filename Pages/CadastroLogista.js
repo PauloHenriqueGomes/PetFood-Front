@@ -1,9 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, ScrollView } from 'react-native';
+import { StyleSheet, Text, CheckBox, state, TextInputComponent, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, handleSubmit, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-
 export default function CadastroLogista() {
 
   const navigation = useNavigation();
@@ -24,7 +23,8 @@ export default function CadastroLogista() {
   const [FInic, setFInic] = useState('');
   const [FFim, setFFim] = useState('');
 
-
+  const [categoria, setcategoria] = useState(false);
+  const [regiao, setregiao] = useState(false);
 
 
   //===========cadastro COM validação========================
@@ -34,7 +34,7 @@ export default function CadastroLogista() {
     if (nome != '' && email.includes('@') && senha != '' && cnpj.length > 13 && celular.length > 10 && cep.length > 7 && rua != '' && numero != '' && cidade != '' && uf != '' && logo != '' && SInic != '' && SFim != '' && FInic != '' && FFim != '') {
 
 
-      axios('http://192.168.1.19:8080/seller/create?categories=FOOD&cityZone=NORTH', {
+      axios('http://192.168.1.19:8080/seller/create?categories=' + categoria + '&cityZone='+regiao, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -46,6 +46,8 @@ export default function CadastroLogista() {
           'name': nome,
           'password': senha,
           'imageUrl': logo,
+          'category': categoria,
+          'cityZone': regiao,
           'registrationInfos': {
             'address': rua,
             'cellPhone': celular,
@@ -63,7 +65,7 @@ export default function CadastroLogista() {
         })
       })
         .then(function (response) {
-          console.log(response);
+          /* console.log(response); */
           alert(response.data);
           navigation.reset({
             routes: [{ name: 'LoginLogista' }]
@@ -245,6 +247,8 @@ export default function CadastroLogista() {
               autoCorrect={false}
               onChangeText={setSFim}
             />
+
+
           </View>
 
 
@@ -271,7 +275,81 @@ export default function CadastroLogista() {
               autoCorrect={false}
               onChangeText={setFFim}
             />
+
           </View>
+          <Text style={styles.Desc}>Suas Categorias</Text>
+
+
+          <View style={styles.rows}>
+            
+
+            {/* <View style={styles.center}> */}
+              <CheckBox
+                value={categoria}
+                onValueChange={() => setcategoria('FOOD')}
+                /* style={styles.checkbox} */ />
+              <Text style={styles.Desc}>Comida</Text>
+              <CheckBox
+                value={categoria}
+                onValueChange={() => setcategoria('TOYS')}
+                /* style={styles.checkbox} */ />
+              <Text style={styles.Desc}>Brinquedos</Text>
+
+              <CheckBox
+
+                value={categoria}
+                onValueChange={() => setcategoria('PHARMACY')}
+                /* style={styles.checkbox} */ />
+              <Text style={styles.Desc}>Remédios</Text>
+
+            {/* </View> */}
+          </View>
+
+
+  
+
+          <Text style={styles.Desc}>Sua região</Text>
+
+          <View style={styles.rows}>
+            
+            {/* <View style={styles.center}> */}
+              <CheckBox
+                value={regiao}
+                onValueChange={() => setregiao('NORTH')}
+                /* style={styles.checkbox} */ />
+              <Text style={styles.Desc}>NORTE</Text>
+              <CheckBox
+                value={regiao}
+                onValueChange={() => setregiao('SOUTH')}
+                /* style={styles.checkbox} */ />
+              <Text style={styles.Desc}>SUL</Text>
+
+              <CheckBox
+
+                value={regiao}
+                onValueChange={() => setregiao('EAST')}
+                /* style={styles.checkbox} */ />
+              <Text style={styles.Desc}>LESTE</Text>
+              <CheckBox
+
+                value={regiao}
+                onValueChange={() => setregiao('WEST')}
+                /* style={styles.checkbox} */ />
+              <Text style={styles.Desc}>OESTE</Text>
+
+
+              <CheckBox
+
+                value={categoria}
+                onValueChange={() => setregiao('CENTER')}
+                /* style={styles.checkbox} */ />
+              <Text style={styles.Desc}>CENTRO</Text>
+
+            {/* </View> */}
+          </View>
+
+
+          
 
           <TouchableOpacity onPress={handleSignClick} style={styles.button}>
             <Text style={styles.buttontext}> Cadastrar</Text>
@@ -302,6 +380,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     marginTop: 30,
   },
+/*   center: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    paddingHorizontal: 30,
+    marginTop: 30,
+    fontSize: 20,
+  }, */
 
   button: {
     height: 42,
@@ -363,6 +448,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between"
+  },
+
+  rows: {
+    marginBottom: 15,
+    flexDirection: "row",
+ 
   },
 
 });

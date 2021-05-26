@@ -15,6 +15,9 @@ export default function Busca({route}) {
   const [resultado, setResultado] = useState([]);
   const navigation = useNavigation();
   const [nome, setNome] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [Regiao, setRegiao] = useState('');
+  
 
 
   useEffect(() => {
@@ -23,6 +26,7 @@ export default function Busca({route}) {
     .then(respt => {
 
     setNome(respt.data.name)
+    setRegiao(respt.data.cityZone)
      /* console.log(respt.data.name) ; */
 })
   } ); 
@@ -32,7 +36,7 @@ export default function Busca({route}) {
     /*useEffect(() =>*/ {
    
 
-      axios.get('http://192.168.1.19:8080/search/seller?isWeek=true&localTime=12%3A00&productTitle='+users)
+      axios.get('http://192.168.1.19:8080/search/seller?isWeek=true&cityZone='+Regiao+'&page=0&size=100&localTime=12%3A00&productTitle='+users)
       .then(resp =>{
 
       setResultado(resp.data)
@@ -45,6 +49,52 @@ export default function Busca({route}) {
        });
 
     };
+//==================================Busca categoria=======================================
+
+    const BuscaComida = async () => 
+    { 
+
+      axios.get('http://192.168.1.19:8080/search/seller/category?category=FOOD&cityZone='+Regiao+'&isWeek=true&localTime=12%3A00&page=0&size=100')
+      .then(resp =>{
+
+      setResultado(resp.data)
+      }).catch(error => {
+        if (error.response) { 
+       alert(error.response.data);
+       }  else {
+       alert(error);
+       } 
+       });}; 
+
+       const BuscaRemedio = async () => 
+       { 
+   
+         axios.get('http://192.168.1.19:8080/search/seller/category?category=PHARMACY&cityZone='+Regiao+'&isWeek=true&localTime=12%3A00&page=0&size=100')
+         .then(resp =>{
+   
+         setResultado(resp.data)
+         }).catch(error => {
+           if (error.response) { 
+          alert(error.response.data);
+          }  else {
+          alert(error);
+          } 
+          });}; 
+
+          const BuscaBrinquedo = async () => 
+          { 
+      
+            axios.get('http://192.168.1.19:8080/search/seller/category?category=TOYS&cityZone='+Regiao+'&isWeek=true&localTime=12%3A00&page=0&size=100')
+            .then(resp =>{
+      
+            setResultado(resp.data)
+            }).catch(error => {
+              if (error.response) { 
+             alert(error.response.data);
+             }  else {
+             alert(error);
+             } 
+             });}; 
 
   return (
 
@@ -77,19 +127,19 @@ export default function Busca({route}) {
       
       </View>
       </TouchableOpacity>)}
-      <Text style={styles.LojaDest}>Principais categorias</Text>
+      <Text style={styles.LojaDest}>{categoria}Principais categorias</Text>
 
-      <TouchableOpacity  style={styles.bannercategoria}>
+      <TouchableOpacity  onPress={BuscaComida}style={styles.bannercategoria}>
           <Image source={logoRacao} style={styles.ImageLoja} />
            <Text style={styles.buttontext}> Alimentos</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity  style={styles.bannercategoria}>
+          <TouchableOpacity  onPress={BuscaBrinquedo}style={styles.bannercategoria}>
           <Image source={logoBrinquedo} style={styles.ImageLoja} />
           <Text style={styles.buttontext}> Brinquedos</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity  style={styles.bannercategoria}>
+          <TouchableOpacity  onPress={BuscaRemedio}style={styles.bannercategoria}>
           <Image source={logoRemedio} style={styles.ImageLoja} />
             <Text style={styles.buttontext}> Remedios</Text>
           </TouchableOpacity>
