@@ -5,12 +5,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //const baseURL = 'localhost:8080';
 
 //const api = axios.post(
-  //  baseURL = 'http://localhost:8080', values,
+  //  baseURL = 'http://192.168.1.6:8080', values,
 //).then(resp => console.log(resp));
 
 
 //export default api;
-const baseURL= 'http://localhost:8080';
+const baseURL= 'http://192.168.1.6:8080';
 
 
 export default {

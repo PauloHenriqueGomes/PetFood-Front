@@ -16,38 +16,27 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
 
-export default function EstoqueLojista({ route }) {
+export default function ProdutosLoja({ route }) {
   const [searchText, setSearchText] = useState('');
   const [users, setUsers] = useState([]);
   const [resultado, setResultado] = useState([]);
   const navigation = useNavigation();
   const [produto, setproduto] = useState('');
-  const [nome, setNome] = useState('');
 
-
-   React.useEffect(() => {
-  
-    axios.get('http://192.168.1.6:8080//seller/find/email?email=' + route.params?.sellerEmail)
-    .then(respt => {
-
-    setNome(respt.data.name)
-     console.log(respt.data.name) ;
-})
-  } ); 
 
 
   useEffect(() => {
 
 
-    axios.get('http://192.168.1.6:8080/search/seller/products?page=0&sellerName='+nome+'&size=100' )
+    axios.get('http://192.168.1.6:8080/search/seller/products?page=0&size=100&sellerName=' + route.params?.name+'&productTitle='+route.params?.product)
       .then(resp => {
 
         setResultado(resp.data)
-         })/*  .catch(error => {
+      }).catch(error => {
         if (error.response) {
           alert(error.response.data);
         } 
-      }) ; */
+      });
   });
 
   return (
@@ -55,21 +44,31 @@ export default function EstoqueLojista({ route }) {
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.form}>
-        <Text style={styles.LojaDest}>Seu estoque</Text>
-        
+{/*           <View style={styles.imputView}>
+
+            <TextInput
+               defaultValue={searchText} 
+              style={styles.imput}
+              placeholder='Procurar produto'
+              textContentType='name'
+               value={users} 
+              onChangeText={setUsers}
+            />
+
+          </View> */}
 
           {resultado.map(resp =>
-            <TouchableOpacity  style={styles.bannerlojas}>
+            <TouchableOpacity onPress={() => navigation.navigate('Carrinho', { title: resp.title, price: resp.price, sellername: route.params?.name, user: route.params?.nome, imgprod: resp.imageUrl, userc:route.params?.user })} style={styles.bannerlojas}>
               <Image style={styles.ImageLoja}
                 source={{ uri: resp.imageUrl }}
               />
 
             <View style={styles.textdesc}>
               <Text > {resp.title}</Text>
-              <Text> Estoque: {resp.stock}</Text>
-              <Text> R$:{resp.price} - {resp.category}</Text>
+              <Text> R$:{resp.price}</Text>
             </View>  
             </TouchableOpacity>)}
+            
 
         </View>
       </View>
@@ -122,14 +121,6 @@ const styles = StyleSheet.create({
     marginBottom: 30
 
   },
-  LojaDest: {
-    color: 'black',
-    fontSize: 40,
-    alignSelf: 'stretch',
-    paddingHorizontal: 20,
-    marginTop: 80,
-    marginBottom: 40,
-  },
 
   text: {
     flex: 1,
@@ -168,7 +159,7 @@ const styles = StyleSheet.create({
   form: {
     alignSelf: 'stretch',
     paddingHorizontal: 30,
-    marginTop: 70,
+    marginTop: 10,
   },
 
   input: {

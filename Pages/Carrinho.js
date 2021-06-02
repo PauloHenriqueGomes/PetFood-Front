@@ -53,7 +53,7 @@ export default function Carrinho({ route }) {
   
   useEffect(() => {
   
-    axios.get('http://192.168.1.19:8080/user/find/email?email=' + route.params?.userEmail)
+    axios.get('http://192.168.1.6:8080/user/find/email?email=' + route.params?.userEmail)
     .then(respt => {
 
     setNome(respt.data.name)
@@ -70,7 +70,7 @@ export default function Carrinho({ route }) {
 
   const handleSignClick = async () => {
 
-    axios('http://192.168.1.19:8080/request/create', {
+    axios('http://192.168.1.6:8080/request/create', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

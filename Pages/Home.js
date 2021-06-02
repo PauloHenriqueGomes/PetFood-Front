@@ -23,7 +23,7 @@ export default function Home({route}) {
   const BuscaComida = async () => {
    
 
-      axios.get('http://192.168.1.19:8080/search/seller/category?category=FOOD&isWeek=true&localTime=15%3A00')
+      axios.get('http://192.168.1.6:8080/search/seller/category?category=FOOD&isWeek=true&localTime=15%3A00')
       .then(res=>{
           console.log(res.data)})
 

@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import logoRacao from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoRaca.png';
 import logoBrinquedo from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoBrinquedo.png';
 import logoRemedio from 'C:/Users/paulo.g.silva/PetFood2/mobile/PetFood-Front/assets/LogoRemedio.png';
+import { func } from 'prop-types';
 
 
 export default function Busca({route}) {
@@ -17,12 +18,28 @@ export default function Busca({route}) {
   const [nome, setNome] = useState('');
   const [categoria, setCategoria] = useState('');
   const [Regiao, setRegiao] = useState('');
+  /* const [minuto, setMinuto] = useState(''); */
+
+  const hora = new Date('December 25, 1995 10:15:30').getHours();
+
+  /* 'December 25, 1995 10:15:30' */
+  
+
+  const minuto = new Date('December 25, 1995 23:15:30').getMinutes();
+
+/*    useEffect (()=>{
+    
+    if (minutos < 10) {
+      setMinuto ("0" + minutos);
+    }
+   
+  });  */
   
 
 
   useEffect(() => {
   
-    axios.get('http://192.168.1.19:8080/user/find/email?email=' + route.params?.userEmail)
+    axios.get('http://192.168.1.6:8080/user/find/email?email=' + route.params?.userEmail)
     .then(respt => {
 
     setNome(respt.data.name)
@@ -36,7 +53,7 @@ export default function Busca({route}) {
     /*useEffect(() =>*/ {
    
 
-      axios.get('http://192.168.1.19:8080/search/seller?isWeek=true&cityZone='+Regiao+'&page=0&size=100&localTime=12%3A00&productTitle='+users)
+      axios.get('http://192.168.1.6:8080/search/seller?isWeek=true&cityZone='+Regiao+'&page=0&size=100&localTime='+hora+'%3A'+minuto+'&productTitle='+users)
       .then(resp =>{
 
       setResultado(resp.data)
@@ -47,6 +64,7 @@ export default function Busca({route}) {
        alert(error);
        } 
        });
+       
 
     };
 //==================================Busca categoria=======================================
@@ -54,7 +72,7 @@ export default function Busca({route}) {
     const BuscaComida = async () => 
     { 
 
-      axios.get('http://192.168.1.19:8080/search/seller/category?category=FOOD&cityZone='+Regiao+'&isWeek=true&localTime=12%3A00&page=0&size=100')
+      axios.get('http://192.168.1.6:8080/search/seller/category?category=FOOD&cityZone='+Regiao+'&isWeek=true&localTime='+hora+'%3A'+minuto+'&page=0&size=100')
       .then(resp =>{
 
       setResultado(resp.data)
@@ -69,7 +87,7 @@ export default function Busca({route}) {
        const BuscaRemedio = async () => 
        { 
    
-         axios.get('http://192.168.1.19:8080/search/seller/category?category=PHARMACY&cityZone='+Regiao+'&isWeek=true&localTime=12%3A00&page=0&size=100')
+         axios.get('http://192.168.1.6:8080/search/seller/category?category=PHARMACY&cityZone='+Regiao+'&isWeek=true&localTime='+hora+'%3A'+minuto+'&page=0&size=100')
          .then(resp =>{
    
          setResultado(resp.data)
@@ -84,7 +102,7 @@ export default function Busca({route}) {
           const BuscaBrinquedo = async () => 
           { 
       
-            axios.get('http://192.168.1.19:8080/search/seller/category?category=TOYS&cityZone='+Regiao+'&isWeek=true&localTime=12%3A00&page=0&size=100')
+            axios.get('http://192.168.1.6:8080/search/seller/category?category=TOYS&cityZone='+Regiao+'&isWeek=true&localTime='+hora+'%3A'+minuto+'&page=0&size=100')
             .then(resp =>{
       
             setResultado(resp.data)
@@ -117,7 +135,7 @@ export default function Busca({route}) {
     </View>
 
     {resultado.map(resp => 
-    <TouchableOpacity onPress={() => navigation.navigate('Produtos Loja' , { name:resp.name, user:nome} )}  style={styles.bannerlojas}>
+    <TouchableOpacity onPress={() => navigation.navigate('BuscaProdutos Loja' , { name:resp.name, user:nome, product:users} )}  style={styles.bannerlojas}>
       <Image style={styles.ImageLoja}
       source={{ uri: resp.imageUrl }} 
       />

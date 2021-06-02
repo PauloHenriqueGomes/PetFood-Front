@@ -19,11 +19,12 @@ export default function Pedidos({route}) {
   const[ListaPedidos,setListaPedidos] = useState([]);
   const[NumPedido,setNumPedido] = useState(false);
   const [nome, setNome] = useState('');
+  const [nota, setNota] = useState(false);
 
 
  useEffect(() => {
   
-    axios.get('http://192.168.1.19:8080/user/find/email?email=' + route.params?.userEmail)
+    axios.get('http://192.168.1.6:8080/user/find/email?email=' + route.params?.userEmail)
     .then(respt => {
 
     setNome(respt.data.name)
@@ -33,7 +34,7 @@ export default function Pedidos({route}) {
 
 
 useEffect(() => {
-  axios.get('http://192.168.1.19:8080/request/find/user?userName=' +nome )
+  axios.get('http://192.168.1.6:8080/request/find/user?userName=' +nome )
   .then(resp => {
 
     setListaPedidos(resp.data)
@@ -46,7 +47,7 @@ useEffect(() => {
   
   const handleSignClick = async () => {
     
-    axios('http://192.168.1.19:8080/request/update/status?id='+NumPedido+'&status=CANCELED', {
+    axios('http://192.168.1.6:8080/request/update/status?id='+NumPedido+'&status=CANCELED', {
       method: 'PATCH',
 
     })
@@ -64,6 +65,54 @@ useEffect(() => {
         alert(error);
         }
         });
+
+}
+
+const handleSignClick2 = async () => {
+    
+  axios('http://192.168.1.6:8080/request/update/status?id='+NumPedido+'&status=DELIVERED', {
+    method: 'PATCH',
+
+  })
+    .then(function (response) {
+      /* console.log(response); */
+      alert(response.data);
+/*        navigation.reset({
+        routes: [{ name: 'Pedidos' }] 
+      });*/
+
+    }).catch(error => {
+      if (error.response) {
+      alert(error.response.data);
+      } else {
+      alert(error);
+      }
+      });
+
+}
+
+
+
+const handleSignClick3 = async () => {
+    
+  axios('http://192.168.1.6:8080/request/rate?id='+NumPedido+'&rate='+nota, {
+    method: 'PATCH',
+
+  })
+    .then(function (response) {
+      /* console.log(response); */
+      alert(response.data);
+/*        navigation.reset({
+        routes: [{ name: 'Pedidos' }] 
+      });*/
+
+    }).catch(error => {
+      if (error.response) {
+      alert(error.response.data);
+      } else {
+      alert(error);
+      }
+      });
 
 }
 
@@ -86,7 +135,7 @@ useEffect(() => {
           <View  style={styles.bannerlojas}>          
             <Text style={styles.buttontext}> {resp.sellerName}</Text>
             <Text style={styles.buttontext2}> Pedido: {resp.id}</Text>
-            <Text style={styles.buttontext2}> Preço: {resp.totalPrice}  Status Pedido: {resp.status}</Text>
+            <Text style={styles.buttontext2}> Preço: {resp.totalPrice}  Status Pedido: {resp.status} Nota: {resp.rate} </Text>
             <CheckBox              
             value={NumPedido}
              onValueChange={()=> setNumPedido(resp.id)} 
@@ -97,7 +146,70 @@ useEffect(() => {
                     
               <TouchableOpacity  onPress={handleSignClick}  style={styles.checkoutButton}>
                 <Text style={styles.checkoutButtonText}>
-                  Cancelar pedido
+                  Cancelar Pedido
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity  onPress={handleSignClick2}  style={styles.checkoutButton}>
+                <Text style={styles.checkoutButtonText}>
+                  Confirmar Entrega
+                </Text>
+              </TouchableOpacity>
+
+
+                  
+
+      <View style={styles.rows}>
+      <Text style={styles.buttontext3}>Sua nota</Text>
+  
+ 
+    <CheckBox
+        value={nota} 
+      onValueChange={() => setNota('0')}
+      style={styles.checkbox}
+      />
+    <Text style={styles.Desc}>0</Text>
+     <CheckBox
+      value={nota} 
+      onValueChange={() => setNota('1')}
+      style={styles.checkbox}
+     />
+    <Text style={styles.Desc}>1</Text>
+
+    <CheckBox
+      value={nota} 
+      onValueChange={() => setNota('2')}
+      style={styles.checkbox}
+      />
+      
+    <Text style={styles.Desc}>2</Text>
+    <CheckBox
+      value={nota} 
+      onValueChange={() => setNota('3')}
+      style={styles.checkbox}
+      />
+      
+    <Text style={styles.Desc}>3</Text>
+    <CheckBox
+      value={nota} 
+      onValueChange={() => setNota('4')}
+      style={styles.checkbox}
+      />
+      
+    <Text style={styles.Desc}>4</Text>
+    <CheckBox
+      value={nota} 
+      onValueChange={() => setNota('5')}
+      style={styles.checkbox}
+      />
+      
+    <Text style={styles.Desc}>5</Text>
+
+    </View>
+
+
+        <TouchableOpacity   onPress={handleSignClick3}   style={styles.checkoutButton2}>
+                <Text style={styles.checkoutButtonText2}>
+                  Avaliar Pedido
                 </Text>
               </TouchableOpacity>
 
@@ -134,6 +246,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     
   },
+  rows: {
+    marginTop:20,
+    flexDirection: "row",
+ 
+  },
 
   bannerlojas: {
     borderColor: '#d9d9d9',
@@ -166,8 +283,19 @@ const styles = StyleSheet.create({
     marginTop: 30,
     alignItems: 'center',
   },
+  checkoutButton2: {
+    backgroundColor: '#333',
+    paddingVertical: 14,
+    marginTop: 10,
+    alignItems: 'center',
+  },
 
   checkoutButtonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: '700',
+  },
+  checkoutButtonText2: {
     fontSize: 18,
     color: '#fff',
     fontWeight: '700',
@@ -217,6 +345,15 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 15,
     textAlign: 'justify',
+    
+    justifyContent: 'space-around',
+  },
+  buttontext3: {
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 15,
+    textAlign: 'justify',
+    marginTop:10,
     
     justifyContent: 'space-around',
   },

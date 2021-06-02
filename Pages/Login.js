@@ -10,7 +10,8 @@ export default function Login() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-
+  
+  
 
   //=========Email senha sem validação====================
   const hhandleSignClick = async () => {
@@ -25,7 +26,9 @@ export default function Login() {
     if (email != '' && senha != '') {
 
       let api = axios.create({
-        baseURL: 'http://192.168.1.19:8080'
+       /*  baseURL: 'http://192.168.1.6:8080'  */
+        /* baseURL: 'http://192.168.1.19:8080'*/  
+         baseURL: 'http://192.168.1.6:8080'
       });
 
       let requestHeaders = {
@@ -75,7 +78,8 @@ export default function Login() {
 
     <View style={styles.container}>
       <Image source={logo} />
-      <Text style={styles.Texto}> Acesso Cliente</Text>
+      <Text style={styles.Texto}>Acesso Cliente</Text>
+
 
       <View style={styles.form}>
 

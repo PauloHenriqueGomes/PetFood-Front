@@ -26,6 +26,7 @@ export default function CadastroLogista() {
   const [categoria, setcategoria] = useState(false);
   const [regiao, setregiao] = useState(false);
 
+  
 
   //===========cadastro COM validação========================
 
@@ -34,11 +35,12 @@ export default function CadastroLogista() {
     if (nome != '' && email.includes('@') && senha != '' && cnpj.length > 13 && celular.length > 10 && cep.length > 7 && rua != '' && numero != '' && cidade != '' && uf != '' && logo != '' && SInic != '' && SFim != '' && FInic != '' && FFim != '') {
 
 
-      axios('http://192.168.1.19:8080/seller/create?categories=' + categoria + '&cityZone='+regiao, {
+      axios('http://192.168.1.6:8080/seller/create?categories=' + categoria + '&cityZone='+regiao, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
+
         },
         data: JSON.stringify({
           'birthdayDate': '2021-03-04T20:27:36.486Z',

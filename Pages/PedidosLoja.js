@@ -25,7 +25,7 @@ export default function PedidosLoja({route}) {
 
   React.useEffect(() => {
   
-    axios.get('http://192.168.1.19:8080//seller/find/email?email=' + route.params?.sellerEmail)
+    axios.get('http://192.168.1.6:8080//seller/find/email?email=' + route.params?.sellerEmail)
     .then(respt => {
 
     setNome(respt.data.name)
@@ -34,7 +34,7 @@ export default function PedidosLoja({route}) {
   } );
 
   useEffect(() => {
-    axios.get('http://192.168.1.19:8080/request/find/seller?sellerName='+nome)
+    axios.get('http://192.168.1.6:8080/request/find/seller?sellerName='+nome)
     .then(resp => {
 
       setListaPedidos(resp.data)
@@ -45,7 +45,7 @@ export default function PedidosLoja({route}) {
   
 const handleSignClick = async () => {
     
-  axios('http://192.168.1.19:8080/request/update/status?id='+NumPedido+'&status=PROCESSED', {
+  axios('http://192.168.1.6:8080/request/update/status?id='+NumPedido+'&status=PROCESSED', {
     method: 'PATCH',
 
   })
@@ -63,7 +63,7 @@ const handleSignClick = async () => {
 
 const handleSignClick2 = async () => {
     
-  axios('http://192.168.1.19:8080/request/update/status?id='+NumPedido+'&status=DELIVERED', {
+  axios('http://192.168.1.6:8080/request/update/status?id='+NumPedido+'&status=SHIPPED', {
     method: 'PATCH',
 
   })
@@ -99,12 +99,12 @@ const handleSignClick2 = async () => {
             <Text style={styles.buttontext}> {resp.userName}</Text>
             <Text style={styles.buttontext2}> Pedido: {resp.id}</Text>
             <Text style={styles.buttontext2}> Produto: {resp.title} Qtd: {resp.totalQuantity} </Text>
-            <Text style={styles.buttontext2}> Preço: {resp.totalPrice}  Status Pedido: {resp.status}</Text>
+            <Text style={styles.buttontext2}> Preço: {resp.totalPrice}  Status Pedido: {resp.status} Nota: {resp.rate}</Text>
             
             <CheckBox              
             value={NumPedido}
              onValueChange={()=> setNumPedido(resp.id)} 
-            style={styles.checkbox}   />
+            style={styles.checkbox} />
 
            </View>
           )}
@@ -116,7 +116,7 @@ const handleSignClick2 = async () => {
               </TouchableOpacity>
               <TouchableOpacity  onPress={handleSignClick2}  style={styles.checkoutButton}>
                 <Text style={styles.checkoutButtonText}>
-                  Entregue
+                  Enviar Pedido
                 </Text>
               </TouchableOpacity>
           

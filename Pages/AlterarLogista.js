@@ -31,7 +31,7 @@ export default function AlterarLogista({ route }) {
       console.log("AlterarLojista sellerEmail: " + route.params?.sellerEmail);
 
       let api = axios.create({
-        baseURL: 'http://192.168.1.19:8080'
+        baseURL: 'http://192.168.1.6:8080'
       });
 
       let requestHeaders = {
@@ -82,7 +82,7 @@ export default function AlterarLogista({ route }) {
     if (nome != '' && email != '' && senha != '' && cnpj != '' && celular != '' && cep != '' && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://192.168.1.19:8080/seller/update?categories=FOOD&cityZone=NORTH&document=' + cnpj, {
+      axios('http://192.168.1.6:8080/seller/update?categories=FOOD&cityZone=NORTH&document=' + cnpj, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -135,7 +135,7 @@ export default function AlterarLogista({ route }) {
     if (nome != '') {
 
 
-      axios('http://192.168.1.19:8080/seller/delete?name=' + nome, {
+      axios('http://192.168.1.6:8080/seller/delete?name=' + nome, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',

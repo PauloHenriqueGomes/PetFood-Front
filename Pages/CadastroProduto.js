@@ -27,7 +27,7 @@ export default function CadastroInfAdicionais({ route }) {
 
   useEffect(() => {
   
-    axios.get('http://192.168.1.19:8080//seller/find/email?email=' + route.params?.sellerEmail)
+    axios.get('http://192.168.1.6:8080//seller/find/email?email=' + route.params?.sellerEmail)
     .then(respt => {
 
     setvendedor(respt.data.name)
@@ -43,7 +43,7 @@ export default function CadastroInfAdicionais({ route }) {
     if (InfAdicionais != '' && marca != '' && descricao != '' && preco != '' && promo != '' && vendedor != '' && estoque != '' && titulo != '' && imgProd != '') {
 
 
-      axios('http://192.168.1.19:8080/product/create?category='+categoria, {
+      axios('http://192.168.1.6:8080/product/create?category='+categoria, {
         method: 'POST',
         headers: {
           'Acpromot': 'application/json',
@@ -95,7 +95,7 @@ export default function CadastroInfAdicionais({ route }) {
     if (vendedor != '' && titulo != '') {
 
 
-      axios('http://192.168.1.19:8080/product/find/title/seller?sellerName=' + vendedor + '&title=' + titulo, {
+      axios('http://192.168.1.6:8080/product/find/title/seller?sellerName=' + vendedor + '&title=' + titulo, {
         method: 'GET',
         headers: {
           'Acpromot': 'application/json',
@@ -148,7 +148,7 @@ export default function CadastroInfAdicionais({ route }) {
     if (InfAdicionais != '' && marca != '' && preco != '' && promo != '' && vendedor != '' && estoque != '' && titulo != '') {
 
 
-      axios('http://192.168.1.19:8080/product/update?category='+categoria+'&sellerName=' + vendedor + '&title=' + titulo, {
+      axios('http://192.168.1.6:8080/product/update?category='+categoria+'&sellerName=' + vendedor + '&title=' + titulo, {
         method: 'PUT',
         headers: {
           'Acpromot': 'application/json',
@@ -196,7 +196,7 @@ export default function CadastroInfAdicionais({ route }) {
     if (titulo != '') {
 
 
-      axios('http://192.168.1.19:8080/product/delete?sellerName=' + vendedor + '&title=' + titulo, {
+      axios('http://192.168.1.6:8080/product/delete?sellerName=' + vendedor + '&title=' + titulo, {
         method: 'DELETE',
         headers: {
           'Acpromot': 'application/json',

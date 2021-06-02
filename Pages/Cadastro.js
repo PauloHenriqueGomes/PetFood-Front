@@ -39,7 +39,7 @@ export default function Cadastro() {
     if (nome != '' && email.includes('@') && senha != '' && cpf.length > 10 && celular.length > 10 && cep.length > 7 && rua != '' && numero != '' && cidade != '' && uf != '') {
 
 
-      axios('http://192.168.1.19:8080/user/create?cityZone='+regiao, {
+      axios('http://192.168.1.6:8080/user/create?cityZone='+regiao, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

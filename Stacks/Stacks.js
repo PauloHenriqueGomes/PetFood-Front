@@ -15,6 +15,7 @@ import Busca from '../Pages/Busca';
 import Tabs from '../Stacks/Tabs';
 import TabsLogista from '../Stacks/TabsLogista';
 import ProdutosLoja from '../Pages/ProdutosLoja';
+import BuscaProdutosLoja from '../Pages/BuscaProdutosLoja';
 
 
 const Stack = createStackNavigator();
@@ -35,6 +36,7 @@ export default function Stacks({route}) {
       <Stack.Screen name="Cadastro Lojista" component={CadastroLogista} />
       <Stack.Screen  name="Carrinho" component={Carrinho}    />
       <Stack.Screen name="Produtos Loja" component={ProdutosLoja} />
+      <Stack.Screen name="BuscaProdutos Loja" component={BuscaProdutosLoja} />
       <Stack.Screen options={{ headerShown: false }} name="Tabs" component={Tabs}  />
       <Stack.Screen options={{ headerShown: false }} name="TabsLogista" component={TabsLogista}/>
 
