@@ -90,6 +90,7 @@ export default function Carrinho({ route }) {
       .then(function (response) {
         console.log(response);
         alert(response.data);
+        navigation.navigate('Pedidos' , { nomes:route.params?.userc} )
 /*         navigation.reset({
           routes: [{ name: 'Home'}], 
 

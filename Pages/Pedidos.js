@@ -17,30 +17,34 @@ export default function Pedidos({route}) {
   const navigation = useNavigation();
 
   const[ListaPedidos,setListaPedidos] = useState([]);
-  const[NumPedido,setNumPedido] = useState(false);
+    const[NumPedido,setNumPedido] = useState([]);  
+    /* const[NumPedido,setNumPedido] = useState(false);  */
   const [nome, setNome] = useState('');
   const [nota, setNota] = useState(false);
 
 
- useEffect(() => {
-  
-    axios.get('http://192.168.1.6:8080/user/find/email?email=' + route.params?.userEmail)
-    .then(respt => {
 
-    setNome(respt.data.name)
-     /* console.log(respt.data.name) ; */
-})
-  } ); 
 
 
 useEffect(() => {
-  axios.get('http://192.168.1.6:8080/request/find/user?userName=' +nome )
+  axios.get('http://192.168.1.6:8080/request/find/user?userName=' +route.params?.nomes /* +nome  */ )
   .then(resp => {
 
     setListaPedidos(resp.data)
     /* console.log(resp.data) */;
 })
 });
+
+
+ /* useEffect(() => {
+  
+  axios.get('http://192.168.1.6:8080/user/find/email?email=' + route.params?.userEmail)
+  .then(respt => {
+
+  setNome(respt.data.name)
+   
+})
+} );   */
 
 
 
@@ -129,7 +133,7 @@ const handleSignClick3 = async () => {
 
 
           <Text style={styles.LojaDest}>Seus pedidos</Text>
-          {/* <Text> {NumPedido}</Text> */}
+         
          
           {ListaPedidos.map(resp =>
           <View  style={styles.bannerlojas}>          
@@ -137,8 +141,8 @@ const handleSignClick3 = async () => {
             <Text style={styles.buttontext2}> Pedido: {resp.id}</Text>
             <Text style={styles.buttontext2}> Preço: {resp.totalPrice}  Status Pedido: {resp.status} Nota: {resp.rate} </Text>
             <CheckBox              
-            value={NumPedido}
-             onValueChange={()=> setNumPedido(resp.id)} 
+              /* value={NumPedido} */
+             onValueChange={()=> setNumPedido(resp.id)}   
             style={styles.checkbox}   
             /* onPress={()=> setNumPedido(resp.id)}  */    />
            </View>

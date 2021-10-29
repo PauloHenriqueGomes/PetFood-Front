@@ -25,7 +25,7 @@ export default function Busca({route}) {
   /* 'December 25, 1995 10:15:30' */
   
 
-  const minuto = new Date('December 25, 1995 23:15:30').getMinutes();
+  const minuto = new Date('December 25, 1995 23:10:30').getMinutes();
 
 /*    useEffect (()=>{
     
@@ -53,7 +53,7 @@ export default function Busca({route}) {
     /*useEffect(() =>*/ {
    
 
-      axios.get('http://192.168.1.6:8080/search/seller?isWeek=true&cityZone='+Regiao+'&page=0&size=100&localTime='+hora+'%3A'+minuto+'&productTitle='+users)
+      axios.get('http://192.168.1.6:8080/search/seller?isWeek=false&cityZone='+Regiao+'&page=0&size=100&localTime='+hora+'%3A'+minuto+'&productTitle='+users)
       .then(resp =>{
 
       setResultado(resp.data)
@@ -72,7 +72,7 @@ export default function Busca({route}) {
     const BuscaComida = async () => 
     { 
 
-      axios.get('http://192.168.1.6:8080/search/seller/category?category=FOOD&cityZone='+Regiao+'&isWeek=true&localTime='+hora+'%3A'+minuto+'&page=0&size=100')
+      axios.get('http://192.168.1.6:8080/search/seller/category?category=FOOD&cityZone='+Regiao+'&isWeek=false&localTime='+hora+'%3A'+minuto+'&page=0&size=100')
       .then(resp =>{
 
       setResultado(resp.data)
@@ -87,7 +87,7 @@ export default function Busca({route}) {
        const BuscaRemedio = async () => 
        { 
    
-         axios.get('http://192.168.1.6:8080/search/seller/category?category=PHARMACY&cityZone='+Regiao+'&isWeek=true&localTime='+hora+'%3A'+minuto+'&page=0&size=100')
+         axios.get('http://192.168.1.6:8080/search/seller/category?category=PHARMACY&cityZone='+Regiao+'&isWeek=false&localTime='+hora+'%3A'+minuto+'&page=0&size=100')
          .then(resp =>{
    
          setResultado(resp.data)
@@ -102,7 +102,7 @@ export default function Busca({route}) {
           const BuscaBrinquedo = async () => 
           { 
       
-            axios.get('http://192.168.1.6:8080/search/seller/category?category=TOYS&cityZone='+Regiao+'&isWeek=true&localTime='+hora+'%3A'+minuto+'&page=0&size=100')
+            axios.get('http://192.168.1.6:8080/search/seller/category?category=TOYS&cityZone='+Regiao+'&isWeek=false&localTime='+hora+'%3A'+minuto+'&page=0&size=100')
             .then(resp =>{
       
             setResultado(resp.data)
